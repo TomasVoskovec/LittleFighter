@@ -7,6 +7,31 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Background -->
+        <StackPanel x:Name="bckgrnd" Background="Black" Grid.RowSpan="3" Grid.ColumnSpan="2"></StackPanel>
+
+        <!-- Stats -->
+        <StackPanel x:Name="statsPlayer" Background="Pink"></StackPanel>
+        <StackPanel x:Name="statsEnemy" Grid.Column="1" Background="HotPink"></StackPanel>
+
+        <!-- Heroes -->
+        <StackPanel x:Name="player" Grid.Row="1" Grid.Column="1" Background="Red"></StackPanel>
+        <StackPanel x:Name="enemy" Grid.Row="1" Background="Blue"/>
+
+        <!-- Action Buttons -->
+        <Button Grid.Row="2" Width="200" HorizontalAlignment="Left" Margin="15" Content="Fast Attack" FontSize="15" FontWeight="Bold"></Button>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Width="200" Margin="15" Content="Jump Attack" FontSize="15" FontWeight="Bold"></Button>
+        <Button Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Right" Margin="15" Content="Defende" FontSize="15" FontWeight="Bold"></Button>
+
     </Grid>
 </Window>
