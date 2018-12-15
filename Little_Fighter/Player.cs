@@ -10,17 +10,15 @@ namespace Little_Fighter
     {
         // Character animation
         public Uri Gif { get; set; }
-
         public int HP { get; set; }
         public int XP { get; set; }
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int Speed { get; set; }
 
-        public Player(Uri spawnGif)
+        public Player(Uri gif)
         {
-            this.Gif = spawnGif;
-
+            this.Gif = gif;
             this.HP = 100;
             this.XP = 0;
             this.Attack = 1;
@@ -28,12 +26,66 @@ namespace Little_Fighter
             this.Speed = 1;
         }
 
+        Random rn = new Random();
+
+        // returns value of Fast Attack damage
         public int FastAttack()
         {
-            int damage = 0;
-            damage = 0;
+            int damage;
+            int missChance;
+
+            missChance = rn.Next(100/this.Speed);
+
+            if (missChance >= 75)
+            {
+                damage = 0;
+            }
+            else
+            {
+                damage = rn.Next(1, 5 * this.Attack);
+            }
 
             return damage;
+        }
+
+        // returns value of Jump Attack damage
+        public int JumpAttack()
+        {
+            int damage;
+            int missChance;
+
+            missChance = rn.Next(100 / this.Speed);
+
+            if (missChance >= 25)
+            {
+                damage = 0;
+            }
+            else
+            {
+                damage = rn.Next(5 * this.Attack, 10 * this.Attack);
+            }
+
+            return damage;
+        }
+
+        // returns percentage of defended damage
+        public int isDefended()
+        {
+            int chance;
+            int def;
+
+            chance = rn.Next(1 * this.Defense, 100);
+
+            if(chance >= 50)
+            {
+                def = rn.Next(1 * this.Defense, 100);
+            }
+            else
+            {
+                def = 0;
+            }
+
+            return def;
         }
     }
 }

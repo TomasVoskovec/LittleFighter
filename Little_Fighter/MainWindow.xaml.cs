@@ -24,5 +24,15 @@ namespace Little_Fighter
         {
             InitializeComponent();
         }
+
+        void initializeGame()
+        {
+            Player player = new Player(new Uri(@"\img\anim\waiting.gif"));
+        }
+
+        void updateGame()
+        {
+
+        }
     }
 }
