@@ -9,16 +9,19 @@ namespace Little_Fighter
     class Player
     {
         // Character animation
-        public Uri Gif { get; set; }
+        public Dictionary<string, Uri> Anims { get; set; }
         public int HP { get; set; }
         public int XP { get; set; }
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int Speed { get; set; }
 
-        public Player(Uri gif)
+        public Player()
         {
-            this.Gif = gif;
+            this.Anims = new Dictionary<string, Uri>();
+            this.Anims.Add("idle", new Uri("img/anim/waiting.gif", UriKind.Relative));
+            this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
+
             this.HP = 100;
             this.XP = 0;
             this.Attack = 1;
@@ -34,7 +37,7 @@ namespace Little_Fighter
             int damage;
             int missChance;
 
-            missChance = rn.Next(100/this.Speed);
+            missChance = rn.Next(100-this.Speed);
 
             if (missChance >= 75)
             {

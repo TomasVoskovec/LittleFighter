@@ -9,9 +9,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAnimatedGif;
 
 namespace Little_Fighter
 {
@@ -20,19 +22,55 @@ namespace Little_Fighter
     /// </summary>
     public partial class MainWindow : Window
     {
+        Player playerData = new Player();
+        bool isAnimating;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        void initializeGame()
+        void fasAttackAnim()
         {
-            Player player = new Player(new Uri(@"\img\anim\waiting.gif"));
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = playerData.Anims["fastAttack"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(player, image);
+            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
+
+            isAnimating = true;
         }
 
-        void updateGame()
+        void idleAnim()
         {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = playerData.Anims["idle"];
+            image.EndInit();
 
+            ImageBehavior.SetAnimatedSource(player, image);
+
+            isAnimating = false;
+        }
+
+        private void animEnd(object sender, EventArgs e)
+        {
+            idleAnim();
+        }
+
+        private void fastAttack_click(object sender, RoutedEventArgs e)
+        {
+            if (!isAnimating)
+            {
+                fasAttackAnim();
+            }
+        }
+
+        private void def_click(object sender, RoutedEventArgs e)
+        {
+            isAnimating = false;
         }
     }
 }
