@@ -22,7 +22,9 @@ namespace Little_Fighter
     /// </summary>
     public partial class MainWindow : Window
     {
-        Player playerData = new Player();
+        static Player playerData = new Player();
+        static Enemy enemyData = new Enemy();
+
         bool isAnimating;
 
         public MainWindow()
@@ -40,7 +42,9 @@ namespace Little_Fighter
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
 
-            isAnimating = true;
+            player.Margin = new Thickness(750, 0, 0, 0);
+
+            //isAnimating = true;
         }
 
         void idleAnim()
@@ -51,13 +55,13 @@ namespace Little_Fighter
             image.EndInit();
 
             ImageBehavior.SetAnimatedSource(player, image);
-
-            isAnimating = false;
         }
 
         private void animEnd(object sender, EventArgs e)
         {
+            player.Margin = new Thickness(150, 0, 0, 0);
             idleAnim();
+            isAnimating = false;
         }
 
         private void fastAttack_click(object sender, RoutedEventArgs e)
@@ -65,6 +69,19 @@ namespace Little_Fighter
             if (!isAnimating)
             {
                 fasAttackAnim();
+                enemyData.HP = enemyData.HP - playerData.FastAttack();
+
+                enemyHp.Content = enemyData.HP + " HP";
+
+                if (enemyData.HP >= 0)
+                {
+                    float width = enemyData.HP * (500 / enemyData.MaxHP);
+                    statsEnemy.Width = width;
+                }
+                else
+                {
+                    statsEnemy.Width = 0;
+                }
             }
         }
 

@@ -10,6 +10,7 @@ namespace Little_Fighter
     {
         // Character animation
         public Dictionary<string, Uri> Anims { get; set; }
+        public int MaxHP { get; set; }
         public int HP { get; set; }
         public int XP { get; set; }
         public int Attack { get; set; }
@@ -22,7 +23,8 @@ namespace Little_Fighter
             this.Anims.Add("idle", new Uri("img/anim/waiting.gif", UriKind.Relative));
             this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
 
-            this.HP = 100;
+            this.MaxHP = 100;
+            this.HP = this.MaxHP;
             this.XP = 0;
             this.Attack = 1;
             this.Defense = 1;

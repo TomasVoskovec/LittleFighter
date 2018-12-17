@@ -22,12 +22,15 @@
         <Image x:Name="bckgrnd" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,0,-2,-20" Source="img/enviroment.png" Stretch="UniformToFill"></Image>
 
         <!-- Stats -->
-        <StackPanel x:Name="statsPlayer"></StackPanel>
-        <StackPanel x:Name="statsEnemy" Grid.Column="1"></StackPanel>
+        <Label x:Name="playerHp" Content="100 HP" FontWeight="Bold" Margin="30,0" Foreground="White" FontSize="15"></Label>
+        <StackPanel x:Name="statsPlayer" Background="Red" Width="500" Margin="30" HorizontalAlignment="Left"></StackPanel>
+        
+        <Label x:Name="enemyHp" Content="100 HP" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Right" Margin="30,0" Foreground="White" FontSize="15"></Label>
+        <StackPanel x:Name="statsEnemy" Grid.Column="1" Background="Red" Width="500" Margin="30" HorizontalAlignment="Right"></StackPanel>
 
         <!-- Heroes -->
-        <Image x:Name="player" Width="200" VerticalAlignment="Bottom" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif"/>
-        <Image x:Name="enemy" Grid.Row="1" Grid.Column="1"></Image>
+        <Image x:Name="player" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.ColumnSpan="2" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif"/>
+        <Image x:Name="enemy" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.ColumnSpan="2" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif"/>
 
 
         <!-- Action Buttons -->
