@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Little_Fighter"
         mc:Ignorable="d"
+        KeyDown="Window_KeyDown"
         Title="MainWindow" Height="748" Width="1230" ResizeMode="CanMinimize">
     <Grid Margin="0,0,2,20">
         <Grid.ColumnDefinitions>
@@ -38,10 +39,10 @@
         </ProgressBar>
 
         <!-- Console -->
-        <WrapPanel Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="15">
-            <TextBox x:Name="gameConsoleInfo" Width="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" Margin="0,5"></TextBox>
-            <TextBox x:Name="gameConsole" Width="200" VerticalContentAlignment="Center" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"></TextBox>
-            <Button Width="50" Height="30" Content="Enter" Click="gameConsole_click"></Button>
+        <WrapPanel x:Name="gameConsole" Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="15" Opacity="0.75" Visibility="Hidden">
+            <TextBox x:Name="gameConsoleInfo" Width="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" Margin="0,5" TextWrapping="Wrap" Background="Black" Foreground="White" BorderBrush="{x:Null}"></TextBox>
+            <TextBox x:Name="gameConsoleInput" Width="200" VerticalContentAlignment="Center" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Background="Black" Foreground="White" BorderBrush="{x:Null}"></TextBox>
+            <Button Width="50" Height="30" Content="Enter" Click="gameConsole_click" Background="Black" Foreground="Orange"></Button>
         </WrapPanel>
             
         <!-- Heroes -->

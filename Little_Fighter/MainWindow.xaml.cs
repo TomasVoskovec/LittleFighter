@@ -103,16 +103,16 @@ namespace Little_Fighter
                 enemyData.HP = enemyData.HP - damage;
 
                 gameConsoleInfo.Text = gameConsoleInfo.Text + "You dealed " + damage + " demage \n";
-
-                enemyHp.Content = enemyData.HP + " HP";
+                gameConsoleInfo.ScrollToEnd();
 
                 if (enemyData.HP >= 0)
                 {
-                    statsEnemy.Value = enemyData.HP;
+                    updateEnemyStats();
                 }
                 else
                 {
                     statsEnemy.Value = 0;
+                    enemyHp.Content = "0 HP";
                 }
             }
         }
@@ -122,20 +122,74 @@ namespace Little_Fighter
             isAnimating = false;
         }
 
-        void deleteGameConsole()
+        void deleteGameConsoleInput()
         {
-            gameConsole.Text = "";
+            gameConsoleInput.Text = "";
+        }
+
+        void consoleClear()
+        {
+            gameConsoleInfo.Text = "";
+        }
+
+        void gameConsoleCommands(string command)
+        {
+            if (command == "/clear")
+            {
+                consoleClear();
+            }
+            else if (command == "/heal enemy")
+            {
+                enemyData.HP = enemyData.MaxHP;
+                updateEnemyStats();
+            }
+            else if (command == "/kill enemy")
+            {
+                enemyData.HP = 0;
+                updateEnemyStats();
+            }
+        }
+
+        void updateEnemyStats()
+        {
+            statsEnemy.Value = enemyData.HP;
+            enemyHp.Content = enemyData.HP + " HP";
+        }
+
+        void sendGameConsoleData()
+        {
+            if (gameConsoleInput.Text != "")
+            {
+                string conseleInput = gameConsoleInput.Text;
+                deleteGameConsoleInput();
+                gameConsoleInfo.Text = gameConsoleInfo.Text + conseleInput + "\n";
+
+                gameConsoleCommands(conseleInput);
+            }
         }
 
         private void gameConsole_click(object sender, RoutedEventArgs e)
         {
-            string conseleInput = gameConsole.Text;
+            sendGameConsoleData();
+        }
 
-            Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod("deleteGameConsole");
-            theMethod.Invoke(theMethod);
-
-            gameConsoleInfo.Text = gameConsoleInfo.Text + conseleInput + "\n";
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                sendGameConsoleData();
+            }
+            if (e.Key == Key.Tab)
+            {
+                if (gameConsole.Visibility == Visibility.Hidden)
+                {
+                    gameConsole.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    gameConsole.Visibility = Visibility.Hidden;
+                }
+            }
         }
     }
 }
