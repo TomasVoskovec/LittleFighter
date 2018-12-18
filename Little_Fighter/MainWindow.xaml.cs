@@ -30,12 +30,27 @@ namespace Little_Fighter
         DispatcherTimer timer = new DispatcherTimer();
 
         bool isAnimating;
+        bool gameOver;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            startGame();
+
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += new EventHandler(oneSecondDelay);
+        }
+
+        void startGame()
+        {
+            statsEnemy.Maximum = enemyData.MaxHP;
+            statsEnemy.Value = enemyData.HP;
+            enemyHp.Content = enemyData.HP + " HP";
+
+            statsPlayer.Maximum = playerData.MaxHP;
+            statsEnemy.Value = playerData.HP;
+            playerHp.Content = playerData.HP + " HP";
         }
 
         void oneSecondDelay(object sender, EventArgs e)
