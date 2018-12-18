@@ -38,10 +38,11 @@
         </ProgressBar>
 
         <!-- Console -->
-        <StackPanel Grid.Row="1">
-            <TextBox x:Name="gameConsoleInfo" Width="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" Margin="15,0"></TextBox>
-            <TextBox x:Name="gameConsole" Width="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="15,5"></TextBox>
-        </StackPanel>
+        <WrapPanel Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="15">
+            <TextBox x:Name="gameConsoleInfo" Width="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" Margin="0,5"></TextBox>
+            <TextBox x:Name="gameConsole" Width="200" VerticalContentAlignment="Center" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"></TextBox>
+            <Button Width="50" Height="30" Content="Enter" Click="gameConsole_click"></Button>
+        </WrapPanel>
             
         <!-- Heroes -->
         <Image x:Name="player" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.ColumnSpan="2" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif"/>

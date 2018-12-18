@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -101,7 +102,7 @@ namespace Little_Fighter
                 int damage = playerData.FastAttack();
                 enemyData.HP = enemyData.HP - damage;
 
-                gameConsole.Text = gameConsole.Text + "You dealed " + damage + " demage \n";
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "You dealed " + damage + " demage \n";
 
                 enemyHp.Content = enemyData.HP + " HP";
 
@@ -119,6 +120,22 @@ namespace Little_Fighter
         private void def_click(object sender, RoutedEventArgs e)
         {
             isAnimating = false;
+        }
+
+        void deleteGameConsole()
+        {
+            gameConsole.Text = "";
+        }
+
+        private void gameConsole_click(object sender, RoutedEventArgs e)
+        {
+            string conseleInput = gameConsole.Text;
+
+            Type thisType = this.GetType();
+            MethodInfo theMethod = thisType.GetMethod("deleteGameConsole");
+            theMethod.Invoke(theMethod);
+
+            gameConsoleInfo.Text = gameConsoleInfo.Text + conseleInput + "\n";
         }
     }
 }
