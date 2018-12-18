@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +14,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WpfAnimatedGif;
 
 namespace Little_Fighter
@@ -25,11 +27,21 @@ namespace Little_Fighter
         static Player playerData = new Player();
         static Enemy enemyData = new Enemy();
 
+        DispatcherTimer timer = new DispatcherTimer();
+
         bool isAnimating;
 
         public MainWindow()
         {
             InitializeComponent();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += new EventHandler(oneSecondDelay);
+        }
+
+        void oneSecondDelay(object sender, EventArgs e)
+        {
+            isAnimating = false;
+            timer.Stop();
         }
 
         void fasAttackAnim()
@@ -44,7 +56,7 @@ namespace Little_Fighter
 
             player.Margin = new Thickness(750, 0, 0, 0);
 
-            //isAnimating = true;
+            isAnimating = true;
         }
 
         void idleAnim()
@@ -57,30 +69,34 @@ namespace Little_Fighter
             ImageBehavior.SetAnimatedSource(player, image);
         }
 
-        private void animEnd(object sender, EventArgs e)
+        private void animEnd(object sender, RoutedEventArgs e)
         {
             player.Margin = new Thickness(150, 0, 0, 0);
             idleAnim();
-            isAnimating = false;
         }
 
         private void fastAttack_click(object sender, RoutedEventArgs e)
         {
+            timer.Start();
+
             if (!isAnimating)
             {
                 fasAttackAnim();
-                enemyData.HP = enemyData.HP - playerData.FastAttack();
+
+                int damage = playerData.FastAttack();
+                enemyData.HP = enemyData.HP - damage;
+
+                gameConsole.Text = gameConsole.Text + "You dealed " + damage + " demage \n";
 
                 enemyHp.Content = enemyData.HP + " HP";
 
                 if (enemyData.HP >= 0)
                 {
-                    float width = enemyData.HP * (500 / enemyData.MaxHP);
-                    statsEnemy.Width = width;
+                    statsEnemy.Value = enemyData.HP;
                 }
                 else
                 {
-                    statsEnemy.Width = 0;
+                    statsEnemy.Value = 0;
                 }
             }
         }

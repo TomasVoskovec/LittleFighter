@@ -22,7 +22,7 @@ namespace Little_Fighter
             this.Anims.Add("idle", new Uri("img/anim/waiting.gif", UriKind.Relative));
             this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
 
-            this.MaxHP = 1000;
+            this.MaxHP = 100;
             this.HP = this.MaxHP;
             this.XP = 0;
             this.Attack = 1;

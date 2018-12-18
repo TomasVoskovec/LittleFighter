@@ -23,10 +23,22 @@
 
         <!-- Stats -->
         <Label x:Name="playerHp" Content="100 HP" FontWeight="Bold" Margin="30,0" Foreground="White" FontSize="15"></Label>
-        <StackPanel x:Name="statsPlayer" Background="Red" Width="500" Margin="30" HorizontalAlignment="Left"></StackPanel>
-        
+        <ProgressBar x:Name="statsPlayer" Background="{x:Null}" Width="500" Minimum="0" Maximum="100" Value="100" Margin="30" HorizontalAlignment="Left" Foreground="Red"></ProgressBar>
+
         <Label x:Name="enemyHp" Content="100 HP" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Right" Margin="30,0" Foreground="White" FontSize="15"></Label>
-        <StackPanel x:Name="statsEnemy" Grid.Column="1" Background="Red" Width="500" Margin="30" HorizontalAlignment="Right"></StackPanel>
+        <ProgressBar x:Name="statsEnemy" Grid.Column="1" Value="100" Width="500" Margin="30" HorizontalAlignment="Right" Background="{x:Null}" Foreground="Red" RenderTransformOrigin="0.5,0.5">
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+
+        <!-- Console -->
+        <TextBox x:Name="gameConsole" Grid.Row="1" Width="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200"></TextBox>
 
         <!-- Heroes -->
         <Image x:Name="player" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.ColumnSpan="2" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif"/>
