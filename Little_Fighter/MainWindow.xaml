@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
         Title="MainWindow" Height="748" Width="1230" ResizeMode="CanMinimize">
-    <Grid Margin="0,0,2,20">
+    <Grid Margin="0,0,2,20" x:Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -39,8 +39,8 @@
         </ProgressBar>
 
         <!-- Console -->
-        <WrapPanel x:Name="gameConsole" Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="15" Opacity="0.75" Visibility="Hidden">
-            <TextBox x:Name="gameConsoleInfo" Width="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" Margin="0,5" TextWrapping="Wrap" Background="Black" Foreground="White" BorderBrush="{x:Null}"></TextBox>
+        <WrapPanel x:Name="gameConsole" FocusManager.FocusedElement="{Binding ElementName=gameConsoleInput}" Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="15" Opacity="0.75" Visibility="Hidden">
+            <TextBox x:Name="gameConsoleInfo" Width="250" MaxHeight="300" HorizontalAlignment="Left" IsReadOnly="True" VerticalAlignment="Top" Height="200" Margin="0,5" TextWrapping="Wrap" Background="Black" Foreground="White" BorderBrush="{x:Null}"></TextBox>
             <TextBox x:Name="gameConsoleInput" Width="200" VerticalContentAlignment="Center" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Background="Black" Foreground="White" BorderBrush="{x:Null}"></TextBox>
             <Button Width="50" Height="30" Content="Enter" Click="gameConsole_click" Background="Black" Foreground="Orange"></Button>
         </WrapPanel>
@@ -53,7 +53,7 @@
         <!-- Action Buttons -->
         <Button Grid.Row="2" Width="200" HorizontalAlignment="Left" Margin="15,15,0,15" Content="Fast Attack" FontSize="15" FontWeight="Bold" Click="fastAttack_click"></Button>
         <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="0,15" Width="200" Content="Jump Attack" FontSize="15" FontWeight="Bold"/>
-        <Button Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Right" Margin="0,15,15,15" Content="Defende" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
+        <Button Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Right" Margin="0,15,15,15" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
 
     </Grid>
 </Window>

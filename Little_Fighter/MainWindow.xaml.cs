@@ -30,6 +30,8 @@ namespace Little_Fighter
 
         DispatcherTimer timer = new DispatcherTimer();
 
+        List<string> consoleCommands = new List<string> {"clear","heal enemy", "kill enemy"};
+
         bool isAnimating;
         bool gameOver;
 
@@ -124,30 +126,41 @@ namespace Little_Fighter
 
         void deleteGameConsoleInput()
         {
-            gameConsoleInput.Text = "";
+            gameConsoleInput.Clear();
         }
 
-        void consoleClear()
+        bool gameConsoleCommands(string command)
         {
-            gameConsoleInfo.Text = "";
-        }
+            bool commandExist = false;
 
-        void gameConsoleCommands(string command)
-        {
-            if (command == "/clear")
+            if (command == "clear")
             {
-                consoleClear();
+                commandExist = true;
             }
-            else if (command == "/heal enemy")
+            else if (command == "heal enemy")
             {
                 enemyData.HP = enemyData.MaxHP;
                 updateEnemyStats();
+                commandExist = true;
             }
-            else if (command == "/kill enemy")
+            else if (command == "kill enemy")
             {
                 enemyData.HP = 0;
                 updateEnemyStats();
+                commandExist = true;
             }
+            if (command == "help")
+            {
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "######## Commands ########\n\n";
+                foreach (string consoleCommand in consoleCommands)
+                {
+                    gameConsoleInfo.Text = gameConsoleInfo.Text + "/" + consoleCommand + "\n";
+                }
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "\n##########################\n";
+                commandExist = true;
+            }
+
+            return commandExist;
         }
 
         void updateEnemyStats()
@@ -162,15 +175,47 @@ namespace Little_Fighter
             {
                 string conseleInput = gameConsoleInput.Text;
                 deleteGameConsoleInput();
-                gameConsoleInfo.Text = gameConsoleInfo.Text + conseleInput + "\n";
 
-                gameConsoleCommands(conseleInput);
+                char[] commandArray = conseleInput.ToCharArray();
+
+                if (commandArray[0] == 47)
+                {
+                    if (gameConsoleCommands(new string(commandArray.Skip(1).ToArray())))
+                    {
+                        if (conseleInput != "/clear")
+                        {
+                            conseleInput = "Command '" + new string(commandArray.Skip(1).ToArray()) + "' activated\n";
+                        }
+                        else
+                        {
+                            gameConsoleInfo.Clear();
+                            conseleInput = "";
+                        }
+                    }
+                    else
+                    {
+                        conseleInput = "Unknown command '" + new string(commandArray.Skip(1).ToArray()) + "'\n";
+                    }
+                }
+                else
+                {
+                    conseleInput = conseleInput + "\n";
+                }
+
+                gameConsoleInfo.Text = gameConsoleInfo.Text + conseleInput;
+                gameConsoleInfo.ScrollToEnd();
             }
         }
 
         private void gameConsole_click(object sender, RoutedEventArgs e)
         {
             sendGameConsoleData();
+        }
+
+        private void gameConsolInfo_click(object sender, RoutedEventArgs e)
+        {
+            sendGameConsoleData();
+            gameConsoleInput.Focus();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
