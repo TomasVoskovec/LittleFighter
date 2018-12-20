@@ -11,10 +11,52 @@ namespace Little_Fighter
         public Player Player { get; set; }
         public Enemy Enemy { get; set; }
 
-        GameData(Player player, Enemy enemy)
+        public GameData(Player player, Enemy enemy)
         {
             this.Player = player;
             this.Enemy = enemy;
+        }
+
+        Random rn = new Random();
+
+        // returns value of Fast Attack damage
+        public int FastAttack()
+        {
+            int damage;
+            int missChance;
+
+            missChance = rn.Next(0, 100);
+
+            if (missChance >= 90 - this.Enemy.Speed)
+            {
+                damage = 0;
+            }
+            else
+            {
+                damage = rn.Next(0 + this.Player.Attack, 5 * this.Player.Attack);
+            }
+
+            return damage;
+        }
+
+        //returns value of Jump Attack damage
+        public int JumpAttack()
+        {
+            int damage;
+            int missChance;
+
+            missChance = rn.Next(0, 100);
+
+            if (missChance >= 60 - this.Enemy.Speed)
+            {
+                damage = 0;
+            }
+            else
+            {
+                damage = rn.Next(0 + this.Player.Attack, 5 * this.Player.Attack);
+            }
+
+            return damage;
         }
     }
 }

@@ -34,8 +34,7 @@ namespace Little_Fighter
             timer.Tick += new EventHandler(oneSecondDelay);
         }
 
-        static Player playerData = new Player();
-        static Enemy enemyData = new Enemy();
+        GameData gameData = new GameData(new Player(), new Enemy());
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -46,13 +45,13 @@ namespace Little_Fighter
 
         void startGame()
         {
-            statsEnemy.Maximum = enemyData.MaxHP;
-            statsEnemy.Value = enemyData.HP;
-            enemyHp.Content = enemyData.HP + " HP";
+            statsEnemy.Maximum = gameData.Enemy.MaxHP;
+            statsEnemy.Value = gameData.Enemy.HP;
+            enemyHp.Content = gameData.Enemy.HP + " HP";
 
-            statsPlayer.Maximum = playerData.MaxHP;
-            statsEnemy.Value = playerData.HP;
-            playerHp.Content = playerData.HP + " HP";
+            statsPlayer.Maximum = gameData.Player.MaxHP;
+            statsEnemy.Value = gameData.Player.HP;
+            playerHp.Content = gameData.Player.HP + " HP";
         }
 
         void oneSecondDelay(object sender, EventArgs e)
@@ -65,7 +64,7 @@ namespace Little_Fighter
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = playerData.Anims["fastAttack"];
+            image.UriSource = gameData.Player.Anims["fastAttack"];
             image.EndInit();
 
             ImageBehavior.SetAnimatedSource(player, image);
@@ -80,7 +79,7 @@ namespace Little_Fighter
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = playerData.Anims["idle"];
+            image.UriSource = gameData.Player.Anims["idle"];
             image.EndInit();
 
             ImageBehavior.SetAnimatedSource(player, image);
@@ -92,29 +91,33 @@ namespace Little_Fighter
             idleAnim();
         }
 
+        //Write info about attack in game console
+        private void attackInfo(int damage)
+        {
+            if (damage > 0)
+            {
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "You dealed " + damage + " demage \n";
+            }
+            else
+            {
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "You missed \n";
+            }
+
+            gameConsoleInfo.ScrollToEnd();
+        }
+
         private void fastAttack_click(object sender, RoutedEventArgs e)
         {
-            timer.Start();
-
             if (!isAnimating)
             {
                 fasAttackAnim();
 
-                int damage = playerData.FastAttack();
-                enemyData.HP = enemyData.HP - damage;
+                int damage = gameData.FastAttack();
+                gameData.Enemy.HP = gameData.Enemy.HP - damage;
 
-                gameConsoleInfo.Text = gameConsoleInfo.Text + "You dealed " + damage + " demage \n";
-                gameConsoleInfo.ScrollToEnd();
+                attackInfo(damage);
 
-                if (enemyData.HP >= 0)
-                {
-                    updateEnemyStats();
-                }
-                else
-                {
-                    statsEnemy.Value = 0;
-                    enemyHp.Content = "0 HP";
-                }
+                timer.Start();
             }
         }
 
@@ -138,13 +141,13 @@ namespace Little_Fighter
             }
             else if (command == "heal enemy")
             {
-                enemyData.HP = enemyData.MaxHP;
+                gameData.Enemy.HP = gameData.Enemy.MaxHP;
                 updateEnemyStats();
                 commandExist = true;
             }
             else if (command == "kill enemy")
             {
-                enemyData.HP = 0;
+                gameData.Enemy.HP = 0;
                 updateEnemyStats();
                 commandExist = true;
             }
@@ -164,8 +167,16 @@ namespace Little_Fighter
 
         void updateEnemyStats()
         {
-            statsEnemy.Value = enemyData.HP;
-            enemyHp.Content = enemyData.HP + " HP";
+            if (gameData.Enemy.HP >= 0)
+            {
+                statsEnemy.Value = gameData.Enemy.HP;
+                enemyHp.Content = gameData.Enemy.HP + " HP";
+            }
+            else
+            {
+                statsEnemy.Value = 0;
+                enemyHp.Content = "0 HP";
+            }
         }
 
         void sendGameConsoleData()
