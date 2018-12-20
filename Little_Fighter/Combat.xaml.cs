@@ -38,7 +38,7 @@ namespace Little_Fighter
 
         DispatcherTimer timer = new DispatcherTimer();
 
-        List<string> consoleCommands = new List<string> { "clear", "heal enemy", "kill enemy" };
+        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy" };
 
         bool isAnimating;
         bool gameOver;
@@ -60,7 +60,7 @@ namespace Little_Fighter
             timer.Stop();
         }
 
-        void fasAttackAnim()
+        void fastAttackAnim()
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
@@ -110,12 +110,31 @@ namespace Little_Fighter
         {
             if (!isAnimating)
             {
-                fasAttackAnim();
+                fastAttackAnim();
 
                 int damage = gameData.FastAttack();
                 gameData.Enemy.HP = gameData.Enemy.HP - damage;
 
                 attackInfo(damage);
+
+                updateEnemyStats();
+
+                timer.Start();
+            }
+        }
+
+        private void jumpAttack_click(object sender, RoutedEventArgs e)
+        {
+            if (!isAnimating)
+            {
+                fastAttackAnim();
+
+                int damage = gameData.JumpAttack();
+                gameData.Enemy.HP = gameData.Enemy.HP - damage;
+
+                attackInfo(damage);
+
+                updateEnemyStats();
 
                 timer.Start();
             }

@@ -6,8 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Little_Fighter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="748" Width="1230" ResizeMode="CanMinimize">
-    <Grid x:Name="grid">
+        x:Name="theWindow"
+        Title="MainWindow" Height="750" Width="1230" ResizeMode="CanResizeWithGrip">
+    <Grid x:Name="grid" Background="#FF060F0F">
         <Frame x:Name="mainFrame" Source="Combat.xaml"></Frame>
     </Grid>
 </Window>

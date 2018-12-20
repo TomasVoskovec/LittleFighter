@@ -33,7 +33,7 @@ namespace Little_Fighter
             }
             else
             {
-                damage = rn.Next(0 + this.Player.Attack, 5 * this.Player.Attack);
+                damage = rn.Next(2 * this.Player.Attack, 5 * this.Player.Attack);
             }
 
             return damage;
@@ -47,13 +47,13 @@ namespace Little_Fighter
 
             missChance = rn.Next(0, 100);
 
-            if (missChance >= 60 - this.Enemy.Speed)
+            if (missChance >= 50 - this.Enemy.Speed)
             {
                 damage = 0;
             }
             else
             {
-                damage = rn.Next(0 + this.Player.Attack, 5 * this.Player.Attack);
+                damage = rn.Next(5 * this.Player.Attack, 10 * this.Player.Attack);
             }
 
             return damage;
