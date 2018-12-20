@@ -6,54 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Little_Fighter"
         mc:Ignorable="d"
-        KeyDown="Window_KeyDown"
         Title="MainWindow" Height="748" Width="1230" ResizeMode="CanMinimize">
-    <Grid Margin="0,0,2,20" x:Name="grid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Background -->
-        <Image x:Name="bckgrnd" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,0,-2,-20" Source="img/enviroment.png" Stretch="UniformToFill"></Image>
-
-        <!-- Stats -->
-        <Label x:Name="playerHp" Content="100 HP" FontWeight="Bold" Margin="30,0" Foreground="White" FontSize="15"></Label>
-        <ProgressBar x:Name="statsPlayer" BorderThickness="0" Background="#FFFFA3A3" Width="500" Minimum="0" Maximum="100" Value="100" Margin="30" HorizontalAlignment="Left" Foreground="Red"></ProgressBar>
-
-        <Label x:Name="enemyHp" Content="100 HP" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Right" Margin="30,0" Foreground="White" FontSize="15"></Label>
-        <ProgressBar x:Name="statsEnemy" Grid.Column="1" BorderThickness="0" Value="100" Maximum="100" Width="500" Margin="30" HorizontalAlignment="Right" Background="#FFFFA3A3" Foreground="Red" RenderTransformOrigin="0.5,0.5">
-            <ProgressBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="180"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-        </ProgressBar>
-
-        <!-- Console -->
-        <WrapPanel x:Name="gameConsole" FocusManager.FocusedElement="{Binding ElementName=gameConsoleInput}" Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="15" Opacity="0.75" Visibility="Hidden">
-            <TextBox x:Name="gameConsoleInfo" Width="250" MaxHeight="300" HorizontalAlignment="Left" IsReadOnly="True" VerticalAlignment="Top" Height="200" Margin="0,5" TextWrapping="Wrap" Background="Black" Foreground="White" BorderBrush="{x:Null}"></TextBox>
-            <TextBox x:Name="gameConsoleInput" Width="200" VerticalContentAlignment="Center" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Background="Black" Foreground="White" BorderBrush="{x:Null}"></TextBox>
-            <Button Width="50" Height="30" Content="Enter" Click="gameConsole_click" Background="Black" Foreground="Orange"></Button>
-        </WrapPanel>
-            
-        <!-- Heroes -->
-        <Image x:Name="player" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.ColumnSpan="2" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif"/>
-        <Image x:Name="enemy" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.ColumnSpan="2" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif"/>
-
-
-        <!-- Action Buttons -->
-        <Button Grid.Row="2" Width="200" HorizontalAlignment="Left" Margin="15,15,0,15" Content="Fast Attack" FontSize="15" FontWeight="Bold" Click="fastAttack_click"></Button>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="0,15" Width="200" Content="Jump Attack" FontSize="15" FontWeight="Bold"/>
-        <Button Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Right" Margin="0,15,15,15" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
-
+    <Grid x:Name="grid">
+        <Frame x:Name="mainFrame" Source="Combat.xaml"></Frame>
     </Grid>
 </Window>
