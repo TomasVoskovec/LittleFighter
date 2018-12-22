@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Little_Fighter"
         mc:Ignorable="d"
         x:Name="theWindow"
-        Title="MainWindow" Height="750" Width="1230" ResizeMode="CanResizeWithGrip">
+        Title="MainWindow" Height="735" Width="1280" ResizeMode="CanResizeWithGrip">
     <Grid x:Name="grid" Background="#FF060F0F">
         <Frame x:Name="mainFrame" Source="Combat.xaml"></Frame>
     </Grid>
