@@ -70,7 +70,22 @@ namespace Little_Fighter
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
 
-            player.Margin = new Thickness(750, 0, 0, 0);
+            player.Margin = new Thickness(760, 0, 0, 0);
+
+            isAnimating = true;
+        }
+
+        void jumpAttackAnim()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = gameData.Player.Anims["jumpAttack"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(player, image);
+            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
+
+            player.Margin = new Thickness(760, 0, 0, 0);
 
             isAnimating = true;
         }
@@ -127,7 +142,7 @@ namespace Little_Fighter
         {
             if (!isAnimating)
             {
-                fastAttackAnim();
+                jumpAttackAnim();
 
                 int damage = gameData.JumpAttack();
                 gameData.Enemy.HP = gameData.Enemy.HP - damage;

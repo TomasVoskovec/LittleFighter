@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\anim\attack.gif" />
+    <Resource Include="img\anim\jump_attack.gif" />
     <Resource Include="img\anim\waiting.gif" />
     <Resource Include="img\enviroment.png" />
   </ItemGroup>
