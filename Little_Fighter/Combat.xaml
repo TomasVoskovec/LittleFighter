@@ -7,7 +7,7 @@
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       KeyDown="Window_KeyDown"
-      Title="Little Fighter" Height="710" Width="1230">
+      Title="Little Fighter" Height="740" Width="1280">
 
     <Grid x:Name="grid">
         <Grid.ColumnDefinitions>
@@ -15,9 +15,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="24*"/>
-            <RowDefinition Height="7*"/>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
 
         <!-- Background -->
@@ -47,13 +47,14 @@
         </WrapPanel>
 
         <!-- Heroes -->
-        <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor"  Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Grid.ColumnSpan="2" Height="200"/>
-        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Grid.Column="1" Height="200"/>
+        <Image x:Name="player" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif" Grid.ColumnSpan="2" Height="200"/>
+        <Image x:Name="enemy" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/waiting.gif" Grid.Column="1" Height="200"/>
+
 
         <!-- Action Buttons -->
-        <Button Grid.Row="2" Width="250" HorizontalAlignment="Left" Margin="25" Content="Fast Attack" FontSize="15" FontWeight="Bold" Click="fastAttack_click"></Button>
-        <Button Grid.Row="2" Width="250" Grid.ColumnSpan="2" Margin="0,25" Content="Jump Attack" FontSize="15" FontWeight="Bold" Click="jumpAttack_click"/>
-        <Button Grid.Row="2" Width="250" Grid.Column="1" HorizontalAlignment="Right" Margin="25" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
+        <Button Grid.Row="2" Width="250" HorizontalAlignment="Left" Margin="25,25,0,25" Content="Fast Attack" FontSize="15" FontWeight="Bold" Click="fastAttack_click"></Button>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="515,25" Content="Jump Attack" FontSize="15" FontWeight="Bold" Click="jumpAttack_click"/>
+        <Button Grid.Row="2" Width="250" Grid.Column="1" HorizontalAlignment="Right" Margin="0,25,25,25" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
 
     </Grid>
 </Page>
