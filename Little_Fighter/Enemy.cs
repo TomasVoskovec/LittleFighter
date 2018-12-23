@@ -14,18 +14,6 @@ namespace Little_Fighter
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int Speed { get; set; }
-
-        public Enemy()
-        {
-            this.Anims = new Dictionary<string, Uri>();
-            this.Anims.Add("idle", new Uri("img/anim/waiting.gif", UriKind.Relative));
-            this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
-
-            this.MaxHP = 20;
-            this.HP = this.MaxHP;
-            this.Attack = 1;
-            this.Defense = 1;
-            this.Speed = 1;
-        }
+        public int Size { get; set; }
     }
 }

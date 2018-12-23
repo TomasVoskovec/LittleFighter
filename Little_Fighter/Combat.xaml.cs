@@ -34,30 +34,37 @@ namespace Little_Fighter
             timer.Tick += new EventHandler(oneSecondDelay);
         }
 
-        GameData gameData = new GameData(new Player(), new Enemy());
+        // Objects
+        GameData gameData = new GameData(new Player(), new Bat());
         DispatcherTimer timer = new DispatcherTimer();
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy" };
 
+        // Bools
         bool isAnimating;
+        bool enemyIsAnimating;
         bool gameOver;
 
+        // Start game action
         void startGame()
         {
             statsEnemy.Maximum = gameData.Enemy.MaxHP;
             statsEnemy.Value = gameData.Enemy.HP;
             enemyHp.Content = gameData.Enemy.HP + " HP";
+            enemy.Width = gameData.Enemy.Size * 100;
 
             statsPlayer.Maximum = gameData.Player.MaxHP;
             statsEnemy.Value = gameData.Player.HP;
             playerHp.Content = gameData.Player.HP + " HP";
         }
 
+        // Delays
         void oneSecondDelay(object sender, EventArgs e)
         {
             isAnimating = false;
             timer.Stop();
         }
 
+        // PLAYER ANIMATIONS
         void fastAttackAnim()
         {
             BitmapImage image = new BitmapImage();
@@ -68,7 +75,7 @@ namespace Little_Fighter
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
 
-            player.Margin = new Thickness(760, 0, 0, 0);
+            player.Margin = new Thickness(725 + (150 / gameData.Enemy.Size), 0, 0, 0);
 
             isAnimating = true;
         }
@@ -98,13 +105,25 @@ namespace Little_Fighter
             ImageBehavior.SetAnimatedSource(player, image);
         }
 
+        // ENEMY ANIMATIONS
+        void enemyIdleAnim()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = gameData.Enemy.Anims["idle"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(enemy, image);
+        }
+
+        // Animation end actions
         private void animEnd(object sender, RoutedEventArgs e)
         {
             player.Margin = new Thickness(150, 0, 0, 0);
             idleAnim();
         }
 
-        //Write info about attack in game console
+        // Write info about attack in game console
         private void attackInfo(int damage)
         {
             if (damage > 0)
@@ -119,6 +138,22 @@ namespace Little_Fighter
             gameConsoleInfo.ScrollToEnd();
         }
 
+        // Update anemy's life and stats
+        void updateEnemyStats()
+        {
+            if (gameData.Enemy.HP >= 0)
+            {
+                statsEnemy.Value = gameData.Enemy.HP;
+                enemyHp.Content = gameData.Enemy.HP + " HP";
+            }
+            else
+            {
+                statsEnemy.Value = 0;
+                enemyHp.Content = "0 HP";
+            }
+        }
+
+        // ACTION BUTTONS
         private void fastAttack_click(object sender, RoutedEventArgs e)
         {
             if (!isAnimating)
@@ -163,6 +198,7 @@ namespace Little_Fighter
             gameConsoleInput.Clear();
         }
 
+        // CONSOLE
         bool gameConsoleCommands(string command)
         {
             bool commandExist = false;
@@ -195,20 +231,6 @@ namespace Little_Fighter
             }
 
             return commandExist;
-        }
-
-        void updateEnemyStats()
-        {
-            if (gameData.Enemy.HP >= 0)
-            {
-                statsEnemy.Value = gameData.Enemy.HP;
-                enemyHp.Content = gameData.Enemy.HP + " HP";
-            }
-            else
-            {
-                statsEnemy.Value = 0;
-                enemyHp.Content = "0 HP";
-            }
         }
 
         void sendGameConsoleData()

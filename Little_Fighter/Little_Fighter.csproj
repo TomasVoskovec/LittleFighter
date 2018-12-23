@@ -70,6 +70,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bat.cs" />
     <Compile Include="Combat.xaml.cs">
       <DependentUpon>Combat.xaml</DependentUpon>
     </Compile>
@@ -110,9 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\anim\attack.gif" />
-    <Resource Include="img\anim\jump_attack.gif" />
     <Resource Include="img\anim\idle.gif" />
+    <Resource Include="img\anim\jump_attack.gif" />
     <Resource Include="img\enviroment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\anim\bat_idle.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

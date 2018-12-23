@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!-- Background -->
-        <Image x:Name="bckgrnd" Grid.RowSpan="3" Grid.ColumnSpan="2" Source="img/enviroment.png" Stretch="UniformToFill"></Image>
+        <Image x:Name="bckgrnd" RenderOptions.BitmapScalingMode="NearestNeighbor" Grid.RowSpan="3" Grid.ColumnSpan="2" Source="img/enviroment.png" Stretch="UniformToFill"></Image>
 
         <!-- Stats -->
         <Label x:Name="playerHp" Content="100 HP" FontWeight="Bold" Margin="30,0" Foreground="White" FontSize="15"></Label>
@@ -47,8 +47,8 @@
         </WrapPanel>
 
         <!-- Heroes -->
-        <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Height="200"/>
-        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Grid.Column="1" Height="200"/>
+        <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Height="200"/>
+        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" Grid.ColumnSpan="2" gif:ImageBehavior.AnimationCompleted="animEndEnemy" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/bat_idle.gif" Height="200"/>
 
 
         <!-- Action Buttons -->
