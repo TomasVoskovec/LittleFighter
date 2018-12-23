@@ -35,9 +35,7 @@ namespace Little_Fighter
         }
 
         GameData gameData = new GameData(new Player(), new Enemy());
-
         DispatcherTimer timer = new DispatcherTimer();
-
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy" };
 
         bool isAnimating;

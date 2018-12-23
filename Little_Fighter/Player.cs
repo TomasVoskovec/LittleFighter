@@ -20,7 +20,7 @@ namespace Little_Fighter
         public Player()
         {
             this.Anims = new Dictionary<string, Uri>();
-            this.Anims.Add("idle", new Uri("img/anim/waiting.gif", UriKind.Relative));
+            this.Anims.Add("idle", new Uri("img/anim/idle.gif", UriKind.Relative));
             this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
             this.Anims.Add("jumpAttack", new Uri("img/anim/jump_attack.gif", UriKind.Relative));
 
