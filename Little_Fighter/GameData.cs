@@ -58,5 +58,10 @@ namespace Little_Fighter
 
             return damage;
         }
+
+        public bool isGameOver()
+        {
+            return this.Player.HP == 0 || this.Enemy.HP == 0;
+        }
     }
 }

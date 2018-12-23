@@ -42,7 +42,6 @@ namespace Little_Fighter
         // Bools
         bool isAnimating;
         bool enemyIsAnimating;
-        bool gameOver;
 
         // Start game action
         void startGame()
@@ -90,7 +89,7 @@ namespace Little_Fighter
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
 
-            player.Margin = new Thickness(760, 0, 0, 0);
+            player.Margin = new Thickness(725 + (150 / gameData.Enemy.Size), 0, 0, 0);
 
             isAnimating = true;
         }
@@ -282,6 +281,26 @@ namespace Little_Fighter
             gameConsoleInput.Focus();
         }
 
+        // MENU
+        void showMenu()
+        {
+            menuBckgrnd.Visibility = Visibility.Visible;
+            menu.Visibility = Visibility.Visible;
+        }
+
+        void hideMenu()
+        {
+            menuBckgrnd.Visibility = Visibility.Hidden;
+            menu.Visibility = Visibility.Hidden;
+        }
+
+        // Not worknig msg
+        private void notWorknig_click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not worknig yet");
+        }
+
+        // Binds
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -297,6 +316,17 @@ namespace Little_Fighter
                 else
                 {
                     gameConsole.Visibility = Visibility.Hidden;
+                }
+            }
+            if (e.Key == Key.Escape)
+            {
+                if(menu.Visibility == Visibility.Hidden)
+                {
+                    showMenu();
+                }
+                else
+                {
+                    hideMenu();
                 }
             }
         }

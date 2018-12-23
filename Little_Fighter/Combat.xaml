@@ -5,9 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Little_Fighter"
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       KeyDown="Window_KeyDown"
-      Title="Little Fighter" Height="740" Width="1280">
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="Little Fighter">
 
     <Grid x:Name="grid">
         <Grid.ColumnDefinitions>
@@ -15,9 +16,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="13*"/>
+            <RowDefinition Height="11*"/>
             <RowDefinition Height="48*"/>
-            <RowDefinition Height="13*"/>
+            <RowDefinition Height="11*"/>
         </Grid.RowDefinitions>
 
         <!-- Background -->
@@ -47,14 +48,24 @@
         </WrapPanel>
 
         <!-- Heroes -->
-        <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Height="200"/>
-        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" Grid.ColumnSpan="2" gif:ImageBehavior.AnimationCompleted="animEndEnemy" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/bat_idle.gif" Height="200"/>
+        <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Height="200" Grid.ColumnSpan="2"/>
+        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/bat_idle.gif" Height="200" Grid.ColumnSpan="2"/>
 
 
         <!-- Action Buttons -->
         <Button Grid.Row="2" Width="250" HorizontalAlignment="Left" Margin="25,25,0,25" Content="Fast Attack" FontSize="15" FontWeight="Bold" Click="fastAttack_click"></Button>
         <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="515,25" Content="Jump Attack" FontSize="15" FontWeight="Bold" Click="jumpAttack_click"/>
         <Button Grid.Row="2" Width="250" Grid.Column="1" HorizontalAlignment="Right" Margin="0,25,25,25" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
+        
+        <!-- Pause Background -->
+        <StackPanel x:Name="menuBckgrnd" Background="Black" Opacity="0.5" Grid.ColumnSpan="2" Grid.RowSpan="3" Visibility="Hidden"></StackPanel>
+
+        <!-- Puse menu -->
+        <StackPanel x:Name="menu" Grid.ColumnSpan="2" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Brown" Visibility="Hidden">
+            <Button Width="400" Height="100" Margin="25" Content="New Game" FontSize="30" Click="notWorknig_click"></Button>
+            <Button Width="400" Height="100" Margin="25" Content="Options" FontSize="30" Click="notWorknig_click"></Button>
+            <Button Width="400" Height="100" Margin="25" Content="Seve &amp; Exit" FontSize="30" Click="notWorknig_click"></Button>
+        </StackPanel>
 
     </Grid>
 </Page>
