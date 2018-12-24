@@ -115,6 +115,17 @@ namespace Little_Fighter
             ImageBehavior.SetAnimatedSource(enemy, image);
         }
 
+        void enemyHurtAnim()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = gameData.Enemy.Anims["hurt"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(player, image);
+            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
+        }
+
         // Animation end actions
         private void animEnd(object sender, RoutedEventArgs e)
         {
