@@ -318,7 +318,7 @@ namespace Little_Fighter
                     gameConsole.Visibility = Visibility.Hidden;
                 }
             }
-            if (e.Key == Key.Escape)
+            if (e.Key == Key.F1)
             {
                 if(menu.Visibility == Visibility.Hidden)
                 {
