@@ -9,6 +9,6 @@
         x:Name="theWindow"
         Title="MainWindow" Height="759" Width="1280" ResizeMode="CanResizeWithGrip">
     <Grid x:Name="grid" Background="#FF060F0F">
-        <Frame x:Name="mainFrame" Source="Combat.xaml"></Frame>
+        <Frame NavigationUIVisibility="Hidden" x:Name="mainFrame" Source="MenuPage.xaml"></Frame>
     </Grid>
 </Window>

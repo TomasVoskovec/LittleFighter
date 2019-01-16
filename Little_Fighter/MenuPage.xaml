@@ -1,0 +1,26 @@
+﻿<Page x:Class="Little_Fighter.MenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Little_Fighter"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="MenuPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="1" Width="500" Margin="15" FontSize="35" FontWeight="Bold" Click="PLAY_click">PLAY</Button>
+        <Button Grid.Row="2" Width="500" Margin="15" FontSize="35" FontWeight="Bold">Upgrade</Button>
+        <Button Grid.Row="3" Width="500" Margin="15" FontSize="35" FontWeight="Bold">Book of mobs</Button>
+        <Button Grid.Row="4" Width="500" Margin="15" FontSize="35" FontWeight="Bold">Save &amp; Exit</Button>
+    </Grid>
+</Page>
