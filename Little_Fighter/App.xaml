@@ -4,6 +4,5 @@
              xmlns:local="clr-namespace:Little_Fighter"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>

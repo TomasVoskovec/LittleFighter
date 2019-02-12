@@ -38,10 +38,13 @@ namespace Little_Fighter
         GameData gameData = new GameData(new Player(), new Bat());
         DispatcherTimer timer = new DispatcherTimer();
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy" };
+        Stack<string> lastConsoleComands = new Stack<string>();
+
+        int lastCommandIndex = 0;
 
         // Bools
         bool isAnimating;
-        bool enemyIsAnimating;
+        //bool enemyIsAnimating;
 
         // Start game action
         void startGame()
@@ -209,6 +212,11 @@ namespace Little_Fighter
         }
 
         // CONSOLE
+        void gameConsoleWrite(string text)
+        {
+            gameConsoleInfo.Text = gameConsoleInfo.Text + text + "\n";
+        }
+
         bool gameConsoleCommands(string command)
         {
             bool commandExist = false;
@@ -239,8 +247,55 @@ namespace Little_Fighter
                 gameConsoleInfo.Text = gameConsoleInfo.Text + "\n##########################\n";
                 commandExist = true;
             }
+            if (command.Contains("color"))
+            {
+                string[] commWord = command.Split(' ');
+
+                string color = commWord[1];
+
+                gameConsoleWrite(color);
+
+
+
+            }
+            if (commandExist)
+            {
+                lastConsoleComands.Push(command);
+                lastCommandIndex = 0;
+            }
 
             return commandExist;
+        }
+
+        void lastCommandUp()
+        {
+            try
+            {
+                gameConsoleInput.Text = "/" + lastConsoleComands.ElementAt(lastCommandIndex);
+
+                if (lastCommandIndex + 1 < lastConsoleComands.Count)
+                {
+                    lastCommandIndex++;
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        void lastCommandDown()
+        {
+            try
+            {
+                if (lastCommandIndex - 1 >= 0)
+                {
+                    lastCommandIndex--;
+                }
+                gameConsoleInput.Text = "/" + lastConsoleComands.ElementAt(lastCommandIndex);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         void sendGameConsoleData()
@@ -340,6 +395,17 @@ namespace Little_Fighter
                     hideMenu();
                 }
             }
+
+            if (e.Key == Key.NumPad8)
+            {
+                lastCommandUp();
+            }
+
+            if (e.Key == Key.NumPad2)
+            {
+                lastCommandDown();
+            }
+
         }
     }
 }
