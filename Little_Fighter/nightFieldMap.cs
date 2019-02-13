@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Little_Fighter
 {
-    class nightFieldMap : Map
+    class NightFieldMap : Map
     {
-        public nightFieldMap()
+        public NightFieldMap()
         {
             this.Name = mapName.nightField;
             this.BackgroundUri = "img/enviroment.png";
