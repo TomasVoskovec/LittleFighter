@@ -49,7 +49,7 @@
 
         <!-- Heroes -->
         <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Height="200" Grid.ColumnSpan="2"/>
-        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/bat_idle.gif" Height="200" Grid.ColumnSpan="2"/>
+        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="enemyAnimEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/bat_idle.gif" Height="200" Grid.ColumnSpan="2"/>
 
 
         <!-- Action Buttons -->

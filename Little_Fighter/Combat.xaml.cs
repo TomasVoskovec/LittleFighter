@@ -30,14 +30,18 @@ namespace Little_Fighter
             InitializeComponent();
             startGame();
 
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += new EventHandler(oneSecondDelay);
+            timerCanAttack.Interval = TimeSpan.FromSeconds(3);
+            timerCanAttack.Tick += new EventHandler(canAttack);
+
+            timerEnemyAttack.Interval = TimeSpan.FromSeconds(1.5);
+            timerEnemyAttack.Tick += new EventHandler(enemyAttack);
         }
 
         // Objects
         GameData gameData = new GameData(new Player(), new Bat());
-        DispatcherTimer timer = new DispatcherTimer();
-        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy" };
+        DispatcherTimer timerCanAttack = new DispatcherTimer();
+        DispatcherTimer timerEnemyAttack = new DispatcherTimer();
+        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" };
         Stack<string> lastConsoleComands = new Stack<string>();
 
         int lastCommandIndex = 0;
@@ -60,33 +64,19 @@ namespace Little_Fighter
         }
 
         // Delays
-        void oneSecondDelay(object sender, EventArgs e)
+        void canAttack(object sender, EventArgs e)
         {
             isAnimating = false;
-            timer.Stop();
+            timerCanAttack.Stop();
+            timerEnemyAttack.Stop();
         }
 
         // PLAYER ANIMATIONS
-        void fastAttackAnim()
+        void attackAnim (Uri animationUri)
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = gameData.Player.Anims["fastAttack"];
-            image.EndInit();
-
-            ImageBehavior.SetAnimatedSource(player, image);
-            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
-
-            player.Margin = new Thickness(725 + (150 / gameData.Enemy.Size), 0, 0, 0);
-
-            isAnimating = true;
-        }
-
-        void jumpAttackAnim()
-        {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = gameData.Player.Anims["jumpAttack"];
+            image.UriSource = animationUri;
             image.EndInit();
 
             ImageBehavior.SetAnimatedSource(player, image);
@@ -129,11 +119,41 @@ namespace Little_Fighter
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
         }
 
+        void enemyAttack(object sender, EventArgs e)
+        {
+            enemyAttackAnim(gameData.Enemy.Anims["idle"]);
+
+            int damage = gameData.FastAttack();
+            gameData.Player.HP = gameData.Player.HP - damage;
+
+            updateStats();
+            timerEnemyAttack.Stop();
+        }
+
+        void enemyAttackAnim(Uri animationUri)
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = animationUri;
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(enemy, image);
+            ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
+
+            enemy.Margin = new Thickness(0, 0, 750 + (150 / gameData.Enemy.Size), 0);
+        }
+
         // Animation end actions
         private void animEnd(object sender, RoutedEventArgs e)
         {
             player.Margin = new Thickness(150, 0, 0, 0);
             idleAnim();
+        }
+
+        private void enemyAnimEnd(object sender, RoutedEventArgs e)
+        {
+            enemy.Margin = new Thickness(0, 0, 150, 0);
+            enemyIdleAnim();
         }
 
         // Write info about attack in game console
@@ -152,7 +172,7 @@ namespace Little_Fighter
         }
 
         // Update anemy's life and stats
-        void updateEnemyStats()
+        void updateStats()
         {
             if (gameData.Enemy.HP >= 0)
             {
@@ -164,6 +184,17 @@ namespace Little_Fighter
                 statsEnemy.Value = 0;
                 enemyHp.Content = "0 HP";
             }
+
+            if (gameData.Player.HP >= 0)
+            {
+                statsPlayer.Value = gameData.Player.HP;
+                playerHp.Content = gameData.Player.HP + " HP";
+            }
+            else
+            {
+                statsPlayer.Value = 0;
+                playerHp.Content = "0 HP";
+            }
         }
 
         // ACTION BUTTONS
@@ -171,16 +202,17 @@ namespace Little_Fighter
         {
             if (!isAnimating)
             {
-                fastAttackAnim();
+                attackAnim(gameData.Player.Anims["fastAttack"]);
 
                 int damage = gameData.FastAttack();
                 gameData.Enemy.HP = gameData.Enemy.HP - damage;
 
                 attackInfo(damage);
 
-                updateEnemyStats();
+                updateStats();
 
-                timer.Start();
+                timerCanAttack.Start();
+                timerEnemyAttack.Start();
             }
         }
 
@@ -188,16 +220,16 @@ namespace Little_Fighter
         {
             if (!isAnimating)
             {
-                jumpAttackAnim();
+                attackAnim(gameData.Player.Anims["jumpAttack"]);
 
                 int damage = gameData.JumpAttack();
                 gameData.Enemy.HP = gameData.Enemy.HP - damage;
 
                 attackInfo(damage);
 
-                updateEnemyStats();
+                updateStats();
 
-                timer.Start();
+                timerCanAttack.Start();
             }
         }
 
@@ -228,13 +260,13 @@ namespace Little_Fighter
             else if (command == "heal enemy")
             {
                 gameData.Enemy.HP = gameData.Enemy.MaxHP;
-                updateEnemyStats();
+                updateStats();
                 commandExist = true;
             }
             else if (command == "kill enemy")
             {
                 gameData.Enemy.HP = 0;
-                updateEnemyStats();
+                updateStats();
                 commandExist = true;
             }
             if (command == "help")
@@ -254,9 +286,17 @@ namespace Little_Fighter
                 string color = commWord[1];
 
                 gameConsoleWrite(color);
+            }
+            if (command.Contains("game data"))
+            {
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "######## Game Data ########\n\n";
 
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "-------- PLAYER -----------\n";
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "-------- ENEMY -----------\n";
 
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "\n##########################\n";
 
+                commandExist = true;
             }
             if (commandExist)
             {

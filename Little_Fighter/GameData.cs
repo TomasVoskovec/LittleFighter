@@ -27,7 +27,7 @@ namespace Little_Fighter
 
             missChance = rn.Next(0, 100);
 
-            if (missChance >= 90 - this.Enemy.Speed)
+            if (missChance >= 100 - this.Enemy.Speed)
             {
                 damage = 0;
             }
@@ -57,6 +57,11 @@ namespace Little_Fighter
             }
 
             return damage;
+        }
+
+        public void enemyAttack()
+        {
+
         }
 
         public bool isGameOver()
