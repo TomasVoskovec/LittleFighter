@@ -53,9 +53,9 @@
 
 
         <!-- Action Buttons -->
-        <Button Grid.Row="2" Width="250" HorizontalAlignment="Left" Margin="25" Content="Fast Attack" FontSize="15" FontWeight="Bold" Click="fastAttack_click"></Button>
-        <Button Grid.Row="2" Width="250" Grid.ColumnSpan="2" Margin="25" Content="Jump Attack" FontSize="15" FontWeight="Bold" Click="jumpAttack_click"/>
-        <Button Grid.Row="2" Width="250" Grid.Column="1" HorizontalAlignment="Right" Margin="25" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
+        <Button x:Name="fastAttackButton" Grid.Row="2" Width="250" HorizontalAlignment="Left" Margin="25" Content="Fast Attack" FontSize="15" FontWeight="Bold" Click="fastAttack_click"></Button>
+        <Button x:Name="jumpAttackButton" Grid.Row="2" Width="250" Grid.ColumnSpan="2" Margin="25" Content="Jump Attack" FontSize="15" FontWeight="Bold" Click="jumpAttack_click"/>
+        <Button x:Name="defButton" Grid.Row="2" Width="250" Grid.Column="1" HorizontalAlignment="Right" Margin="25" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"></Button>
         
         <!-- Pause Background -->
         <StackPanel x:Name="menuBckgrnd" Background="Black" Opacity="0.5" Grid.ColumnSpan="2" Grid.RowSpan="3" Visibility="Hidden"></StackPanel>

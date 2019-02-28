@@ -47,8 +47,10 @@ namespace Little_Fighter
         int lastCommandIndex = 0;
 
         // Bools
-        bool isAnimating;
-        //bool enemyIsAnimating;
+        bool isAttack;
+        bool isEnemyAttack;
+        bool isEnemyDeath = false;
+        bool isDeath = false;
 
         // Start game action
         void startGame()
@@ -66,7 +68,7 @@ namespace Little_Fighter
         // Delays
         void canAttack(object sender, EventArgs e)
         {
-            isAnimating = false;
+            isAttack = false;
             timerCanAttack.Stop();
             timerEnemyAttack.Stop();
         }
@@ -84,7 +86,33 @@ namespace Little_Fighter
 
             player.Margin = new Thickness(725 + (150 / gameData.Enemy.Size), 0, 0, 0);
 
-            isAnimating = true;
+            enemyHurtAnim();
+
+            updateStats();
+
+            isAttack = true;
+        }
+
+        void hurtAnim()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = gameData.Player.Anims["hurt"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(player, image);
+            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(2));
+        }
+
+        void defAnim()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = gameData.Player.Anims["def"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(player, image);
+            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
         }
 
         void idleAnim()
@@ -115,18 +143,16 @@ namespace Little_Fighter
             image.UriSource = gameData.Enemy.Anims["hurt"];
             image.EndInit();
 
-            ImageBehavior.SetAnimatedSource(player, image);
-            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
+            ImageBehavior.SetAnimatedSource(enemy, image);
+            ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
         }
 
         void enemyAttack(object sender, EventArgs e)
         {
-            enemyAttackAnim(gameData.Enemy.Anims["idle"]);
+            enemyAttackAnim(gameData.Enemy.Anims["attack"]);
 
-            int damage = gameData.FastAttack();
-            gameData.Player.HP = gameData.Player.HP - damage;
+            isEnemyAttack = true;
 
-            updateStats();
             timerEnemyAttack.Stop();
         }
 
@@ -141,17 +167,74 @@ namespace Little_Fighter
             ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
 
             enemy.Margin = new Thickness(0, 0, 750 + (150 / gameData.Enemy.Size), 0);
+
+            hurtAnim();
+        }
+
+        void enemyDeathAnim()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = gameData.Enemy.Anims["hurt"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(enemy, image);
+            ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
+
+            isEnemyDeath = true;
+        }
+
+        void playerDeathAnim()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = gameData.Player.Anims["death"];
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(player, image);
+            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
+
+            isDeath = true;
         }
 
         // Animation end actions
         private void animEnd(object sender, RoutedEventArgs e)
         {
             player.Margin = new Thickness(150, 0, 0, 0);
-            idleAnim();
+
+            if (isDeath)
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.UriSource = gameData.Player.Anims["after_death"];
+                image.EndInit();
+
+                ImageBehavior.SetAnimatedSource(player, image);
+                ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
+            }
+            else
+            {
+                idleAnim();
+            }
         }
 
         private void enemyAnimEnd(object sender, RoutedEventArgs e)
         {
+            if (isEnemyAttack)
+            {
+                int damage = gameData.FastAttack();
+                gameData.Player.HP = gameData.Player.HP - damage;
+
+                updateStats();
+
+                isEnemyAttack = false;
+            }
+
+            if (isEnemyDeath)
+            {
+                enemy.Visibility = Visibility.Hidden;
+            }
+
             enemy.Margin = new Thickness(0, 0, 150, 0);
             enemyIdleAnim();
         }
@@ -171,10 +254,11 @@ namespace Little_Fighter
             gameConsoleInfo.ScrollToEnd();
         }
 
-        // Update anemy's life and stats
+        // Update game stats
         void updateStats()
         {
-            if (gameData.Enemy.HP >= 0)
+            // Update lifes
+            if (gameData.Enemy.HP > 0)
             {
                 statsEnemy.Value = gameData.Enemy.HP;
                 enemyHp.Content = gameData.Enemy.HP + " HP";
@@ -183,9 +267,11 @@ namespace Little_Fighter
             {
                 statsEnemy.Value = 0;
                 enemyHp.Content = "0 HP";
+
+                gameWinAction();
             }
 
-            if (gameData.Player.HP >= 0)
+            if (gameData.Player.HP > 0)
             {
                 statsPlayer.Value = gameData.Player.HP;
                 playerHp.Content = gameData.Player.HP + " HP";
@@ -194,13 +280,41 @@ namespace Little_Fighter
             {
                 statsPlayer.Value = 0;
                 playerHp.Content = "0 HP";
+
+                gameOverAction();
             }
+        }
+
+        void gameOverAction()
+        {
+            playerDeathAnim();
+            disableButtons();
+        }
+
+        void gameWinAction()
+        {
+            enemyDeathAnim();
+            disableButtons();
+        }
+
+        void disableButtons()
+        {
+            defButton.IsEnabled = false;
+            fastAttackButton.IsEnabled = false;
+            jumpAttackButton.IsEnabled = false;
+        }
+
+        void enableButtons()
+        {
+            defButton.IsEnabled = true;
+            fastAttackButton.IsEnabled = true;
+            jumpAttackButton.IsEnabled = true;
         }
 
         // ACTION BUTTONS
         private void fastAttack_click(object sender, RoutedEventArgs e)
         {
-            if (!isAnimating)
+            if (!isAttack)
             {
                 attackAnim(gameData.Player.Anims["fastAttack"]);
 
@@ -218,7 +332,7 @@ namespace Little_Fighter
 
         private void jumpAttack_click(object sender, RoutedEventArgs e)
         {
-            if (!isAnimating)
+            if (!isAttack)
             {
                 attackAnim(gameData.Player.Anims["jumpAttack"]);
 
@@ -235,7 +349,7 @@ namespace Little_Fighter
 
         private void def_click(object sender, RoutedEventArgs e)
         {
-            isAnimating = false;
+            isAttack = false;
         }
 
         void deleteGameConsoleInput()
@@ -257,10 +371,34 @@ namespace Little_Fighter
             {
                 commandExist = true;
             }
+            else if (command == "heal")
+            {
+                gameData.Player.HP = gameData.Player.MaxHP;
+                isDeath = false;
+                if (!isEnemyDeath)
+                {
+                    enableButtons();
+                }
+                idleAnim();
+                updateStats();
+                commandExist = true;
+            }
+            else if (command == "suicide")
+            {
+                gameData.Player.HP = 0;
+                updateStats();
+                commandExist = true;
+            }
             else if (command == "heal enemy")
             {
                 gameData.Enemy.HP = gameData.Enemy.MaxHP;
                 updateStats();
+                enemy.Visibility = Visibility.Visible;
+                if (!isDeath)
+                {
+                    enableButtons();
+                }
+                isEnemyDeath = false;
                 commandExist = true;
             }
             else if (command == "kill enemy")

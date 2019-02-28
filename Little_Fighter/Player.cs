@@ -21,6 +21,10 @@ namespace Little_Fighter
         {
             this.Anims = new Dictionary<string, Uri>();
             this.Anims.Add("idle", new Uri("img/anim/idle.gif", UriKind.Relative));
+            this.Anims.Add("death", new Uri("img/anim/death.gif", UriKind.Relative));
+            this.Anims.Add("after_death", new Uri("img/anim/after_death.gif", UriKind.Relative));
+            this.Anims.Add("hurt", new Uri("img/anim/hurt.gif", UriKind.Relative));
+            this.Anims.Add("def", new Uri("img/anim/def.gif", UriKind.Relative));
             this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
             this.Anims.Add("jumpAttack", new Uri("img/anim/jump_attack.gif", UriKind.Relative));
 

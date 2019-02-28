@@ -12,6 +12,7 @@ namespace Little_Fighter
         {
             this.Anims = new Dictionary<string, Uri>();
             this.Anims.Add("idle", new Uri("img/anim/bat_idle.gif", UriKind.Relative));
+            this.Anims.Add("attack", new Uri("img/anim/bat_attack.gif", UriKind.Relative));
             this.Anims.Add("hurt", new Uri("img/anim/bat_hurt.gif", UriKind.Relative));
 
             this.MaxHP = 20 + (20 / 10 * lvl);

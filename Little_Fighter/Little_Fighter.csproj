@@ -139,22 +139,53 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\anim\attack.gif" />
-    <Resource Include="img\anim\idle.gif" />
-    <Resource Include="img\anim\jump_attack.gif" />
+    <Resource Include="img\anim\attack.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\anim\idle.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\anim\jump_attack.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="img\enviroment.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\anim\bat_idle.gif" />
+    <Resource Include="img\anim\bat_idle.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\anim\bat_hurt.gif" />
+    <Resource Include="img\anim\bat_hurt.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\Map.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\anim\bat_attack.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\anim\death.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\anim\def.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\anim\hurt.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\anim\after_death.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
