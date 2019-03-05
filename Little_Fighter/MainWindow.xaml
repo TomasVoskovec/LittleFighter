@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Little_Fighter"
         mc:Ignorable="d"
         x:Name="theWindow"
-        Title="MainWindow" Height="759" Width="1280" ResizeMode="CanResizeWithGrip">
+        Title="MainWindow" Height="759" Width="1280" ResizeMode="CanMinimize">
     <Grid x:Name="grid" Background="#FF060F0F">
         <Frame NavigationUIVisibility="Hidden" x:Name="mainFrame" Source="MenuPage.xaml"></Frame>
     </Grid>

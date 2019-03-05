@@ -21,6 +21,8 @@ namespace Little_Fighter
             this.Defense = 1 + (20 * lvl / 100);
             this.Speed = 30 + (20 * lvl / 100);
             this.Size = 1 + (20 * lvl / 100);
+
+            this.Attacks.Add(new Attack(new Player(), this, false));
         }
     }
 }

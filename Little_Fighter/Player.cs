@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Little_Fighter
 {
-    class Player
+    public class Player
     {
         // Character animation
         public Dictionary<string, Uri> Anims { get; set; }

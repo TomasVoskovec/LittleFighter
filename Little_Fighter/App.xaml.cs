@@ -13,5 +13,6 @@ namespace Little_Fighter
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

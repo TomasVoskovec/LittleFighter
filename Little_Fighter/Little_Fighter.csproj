@@ -80,6 +80,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attack.cs" />
     <Compile Include="Bat.cs" />
     <Compile Include="Combat.xaml.cs">
       <DependentUpon>Combat.xaml</DependentUpon>

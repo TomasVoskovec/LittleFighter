@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Little_Fighter
 {
-    class GameData
+    public class GameData
     {
         public Player Player { get; set; }
         public Enemy Enemy { get; set; }
@@ -57,11 +57,6 @@ namespace Little_Fighter
             }
 
             return damage;
-        }
-
-        public void enemyAttack()
-        {
-
         }
 
         public bool isGameOver()

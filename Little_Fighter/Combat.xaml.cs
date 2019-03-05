@@ -33,16 +33,17 @@ namespace Little_Fighter
             timerCanAttack.Interval = TimeSpan.FromSeconds(3);
             timerCanAttack.Tick += new EventHandler(canAttack);
 
-            timerEnemyAttack.Interval = TimeSpan.FromSeconds(1.5);
+            timerEnemyAttack.Interval = TimeSpan.FromSeconds(1);
             timerEnemyAttack.Tick += new EventHandler(enemyAttack);
         }
 
         // Objects
-        GameData gameData = new GameData(new Player(), new Bat());
         DispatcherTimer timerCanAttack = new DispatcherTimer();
         DispatcherTimer timerEnemyAttack = new DispatcherTimer();
-        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" };
+        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" , "suicide" };
         Stack<string> lastConsoleComands = new Stack<string>();
+        static Random rn = new Random();
+        GameData gameData = new GameData(new Player(), new Bat());
 
         int lastCommandIndex = 0;
 
@@ -222,7 +223,7 @@ namespace Little_Fighter
         {
             if (isEnemyAttack)
             {
-                int damage = gameData.FastAttack();
+                int damage = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)].Damage;
                 gameData.Player.HP = gameData.Player.HP - damage;
 
                 updateStats();
@@ -344,6 +345,7 @@ namespace Little_Fighter
                 updateStats();
 
                 timerCanAttack.Start();
+                timerEnemyAttack.Start();
             }
         }
 
@@ -545,6 +547,8 @@ namespace Little_Fighter
         }
 
         // Binds
+
+        
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
