@@ -11,15 +11,8 @@ namespace Little_Fighter
         Random rn = new Random();
 
         public bool CriticalEffect { get; set; } = false;
-        public GameData Data { get; set; }
 
-        public Attack(Player player, Enemy enemy, bool criticalEffect)
-        {
-            this.Data = new GameData(player, enemy);
-            this.CriticalEffect = criticalEffect;
-        }
-
-        public int Damage(bool criticalEffect)
+        public int Damage(Player player, Enemy enemy)
         {
             int missChance = rn.Next(0, 100);
 

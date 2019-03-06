@@ -34,13 +34,15 @@ namespace Little_Fighter
             timerCanAttack.Tick += new EventHandler(canAttack);
 
             timerEnemyAttack.Interval = TimeSpan.FromSeconds(1);
-            timerEnemyAttack.Tick += new EventHandler(enemyAttack);
+            timerEnemyAttack.Tick += new EventHandler(enemyAttack_timer);
+
+            gameData.Player.HP = 10;
         }
 
         // Objects
         DispatcherTimer timerCanAttack = new DispatcherTimer();
         DispatcherTimer timerEnemyAttack = new DispatcherTimer();
-        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" , "suicide" };
+        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" , "suicide", "dýl dymič"};
         Stack<string> lastConsoleComands = new Stack<string>();
         static Random rn = new Random();
         GameData gameData = new GameData(new Player(), new Bat());
@@ -52,6 +54,7 @@ namespace Little_Fighter
         bool isEnemyAttack;
         bool isEnemyDeath = false;
         bool isDeath = false;
+        bool isGame = true;
 
         // Start game action
         void startGame()
@@ -148,13 +151,24 @@ namespace Little_Fighter
             ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
         }
 
-        void enemyAttack(object sender, EventArgs e)
+        void enemyAttack_timer(object sender, EventArgs e)
         {
-            enemyAttackAnim(gameData.Enemy.Anims["attack"]);
+            enemyAttack();
+        }
 
-            isEnemyAttack = true;
+        void enemyAttack()
+        {
+            if (isGame)
+            {
+                int damage = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)].Damage(gameData.Player, gameData.Enemy);
+                gameData.Player.HP = gameData.Player.HP - damage;
 
-            timerEnemyAttack.Stop();
+                updateStats();
+
+                enemyAttackAnim(gameData.Enemy.Anims["attack"]);
+
+                timerEnemyAttack.Stop();
+            }
         }
 
         void enemyAttackAnim(Uri animationUri)
@@ -221,16 +235,6 @@ namespace Little_Fighter
 
         private void enemyAnimEnd(object sender, RoutedEventArgs e)
         {
-            if (isEnemyAttack)
-            {
-                int damage = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)].Damage;
-                gameData.Player.HP = gameData.Player.HP - damage;
-
-                updateStats();
-
-                isEnemyAttack = false;
-            }
-
             if (isEnemyDeath)
             {
                 enemy.Visibility = Visibility.Hidden;
@@ -290,12 +294,14 @@ namespace Little_Fighter
         {
             playerDeathAnim();
             disableButtons();
+            isGame = false;
         }
 
         void gameWinAction()
         {
             enemyDeathAnim();
             disableButtons();
+            isGame = false;
         }
 
         void disableButtons()
@@ -315,7 +321,7 @@ namespace Little_Fighter
         // ACTION BUTTONS
         private void fastAttack_click(object sender, RoutedEventArgs e)
         {
-            if (!isAttack)
+            if (!isAttack && isGame)
             {
                 attackAnim(gameData.Player.Anims["fastAttack"]);
 
