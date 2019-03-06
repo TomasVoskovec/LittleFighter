@@ -163,6 +163,8 @@ namespace Little_Fighter
                 int damage = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)].Damage(gameData.Player, gameData.Enemy);
                 gameData.Player.HP = gameData.Player.HP - damage;
 
+                enemyAttackInfo(damage);
+
                 updateStats();
 
                 enemyAttackAnim(gameData.Enemy.Anims["attack"]);
@@ -259,6 +261,21 @@ namespace Little_Fighter
             gameConsoleInfo.ScrollToEnd();
         }
 
+        // Write info about enemy attack in game console
+        private void enemyAttackInfo(int damage)
+        {
+            if (damage > 0)
+            {
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "Enemy dealed " + damage + " demage \n";
+            }
+            else
+            {
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "Enemy missed \n";
+            }
+
+            gameConsoleInfo.ScrollToEnd();
+        }
+
         // Update game stats
         void updateStats()
         {
@@ -328,7 +345,7 @@ namespace Little_Fighter
                 int damage = gameData.FastAttack();
                 gameData.Enemy.HP = gameData.Enemy.HP - damage;
 
-                attackInfo(damage);
+                //attackInfo(damage);
 
                 updateStats();
 
@@ -386,6 +403,7 @@ namespace Little_Fighter
                 if (!isEnemyDeath)
                 {
                     enableButtons();
+                    isGame = true;
                 }
                 idleAnim();
                 updateStats();
@@ -405,6 +423,7 @@ namespace Little_Fighter
                 if (!isDeath)
                 {
                     enableButtons();
+                    isGame = true;
                 }
                 isEnemyDeath = false;
                 commandExist = true;
@@ -438,7 +457,16 @@ namespace Little_Fighter
                 gameConsoleInfo.Text = gameConsoleInfo.Text + "######## Game Data ########\n\n";
 
                 gameConsoleInfo.Text = gameConsoleInfo.Text + "-------- PLAYER -----------\n";
-                gameConsoleInfo.Text = gameConsoleInfo.Text + "-------- ENEMY -----------\n";
+                gameConsoleInfo.Text += "HP: " + gameData.Player.HP + "\n";
+                gameConsoleInfo.Text += "Max HP: " + gameData.Player.MaxHP + "\n";
+                gameConsoleInfo.Text += "Attack: " + gameData.Player.Attack + "\n";
+                gameConsoleInfo.Text += "Deffense: " + gameData.Player.Defense + "\n";
+
+                gameConsoleInfo.Text = gameConsoleInfo.Text + "\n-------- ENEMY -----------\n";
+                gameConsoleInfo.Text += "HP: " + gameData.Enemy.HP + "\n";
+                gameConsoleInfo.Text += "Max HP: " + gameData.Enemy.MaxHP + "\n";
+                gameConsoleInfo.Text += "Attack: " + gameData.Enemy.Attack + "\n";
+                gameConsoleInfo.Text += "Deffense: " + gameData.Enemy.Defense + "\n";
 
                 gameConsoleInfo.Text = gameConsoleInfo.Text + "\n##########################\n";
 

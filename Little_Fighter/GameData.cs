@@ -33,7 +33,7 @@ namespace Little_Fighter
             }
             else
             {
-                damage = rn.Next(2 * this.Player.Attack, 5 * this.Player.Attack);
+                damage = rn.Next(2 * this.Player.Attack, 5 * this.Player.Attack) + rn.Next(1, 3);
             }
 
             return damage;
