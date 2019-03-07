@@ -10,6 +10,8 @@ namespace Little_Fighter
     {
         // Character animation
         public Dictionary<string, Uri> Anims { get; set; }
+        public List<PlayerAttack> Attacks { get; set; }
+
         public int MaxHP { get; set; }
         public int HP { get; set; }
         public int XP { get; set; }
@@ -27,6 +29,8 @@ namespace Little_Fighter
             this.Anims.Add("def", new Uri("img/anim/def.gif", UriKind.Relative));
             this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
             this.Anims.Add("jumpAttack", new Uri("img/anim/jump_attack.gif", UriKind.Relative));
+
+            this.Attacks = new List<PlayerAttack>();
 
             this.MaxHP = 30;
             this.HP = this.MaxHP;

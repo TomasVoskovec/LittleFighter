@@ -22,7 +22,7 @@ namespace Little_Fighter
             this.Speed = 30 + (20 * lvl / 100);
             this.Size = 1 + (20 * lvl / 100);
 
-            this.Attacks.Add(new Attack("Bite", 1, 25));
+            this.Attacks.Add(new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }));
         }
     }
 }

@@ -17,6 +17,6 @@ namespace Little_Fighter
         public float Speed { get; set; }
         public float Size { get; set; }
 
-        public List<Attack> Attacks { get; set; } = new List<Attack>();
+        public List<EnemyAttack> Attacks { get; set; } = new List<EnemyAttack>();
     }
 }

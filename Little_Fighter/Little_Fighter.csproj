@@ -80,11 +80,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attack.cs" />
+    <Compile Include="Effect.cs" />
+    <Compile Include="EnemyAttack.cs" />
     <Compile Include="Bat.cs" />
     <Compile Include="Combat.xaml.cs">
       <DependentUpon>Combat.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CriticalEffect.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameOver.xaml.cs">
@@ -113,6 +115,7 @@
     </Compile>
     <Compile Include="nightFieldMap.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerAttack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

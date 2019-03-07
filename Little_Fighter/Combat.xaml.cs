@@ -36,12 +36,16 @@ namespace Little_Fighter
             timerEnemyAttack.Interval = TimeSpan.FromSeconds(1);
             timerEnemyAttack.Tick += new EventHandler(enemyAttack_timer);
 
-            gameData.Player.HP = 10;
+            timerEndEnemyAttack.Interval = TimeSpan.FromSeconds(0.5);
+            timerEndEnemyAttack.Tick += new EventHandler(enemyAttackEnd_timer);
+
+            //gameData.Player.HP = 1;
         }
 
         // Objects
         DispatcherTimer timerCanAttack = new DispatcherTimer();
         DispatcherTimer timerEnemyAttack = new DispatcherTimer();
+        DispatcherTimer timerEndEnemyAttack = new DispatcherTimer();
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" , "suicide", "dýl dymič"};
         Stack<string> lastConsoleComands = new Stack<string>();
         static Random rn = new Random();
@@ -55,6 +59,9 @@ namespace Little_Fighter
         bool isEnemyDeath = false;
         bool isDeath = false;
         bool isGame = true;
+        bool isCriticalEffected = false;
+        bool isEnemyCriticalEffected = false;
+        bool isHurtAnim = false;
 
         // Start game action
         void startGame()
@@ -105,7 +112,7 @@ namespace Little_Fighter
             image.EndInit();
 
             ImageBehavior.SetAnimatedSource(player, image);
-            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(2));
+            ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
         }
 
         void defAnim()
@@ -160,10 +167,15 @@ namespace Little_Fighter
         {
             if (isGame)
             {
-                Attack enemyAttack = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)];
+                EnemyAttack enemyAttack = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)];
 
                 int damage = enemyAttack.Damage(gameData.Player, gameData.Enemy);
                 gameData.Player.HP = gameData.Player.HP - damage;
+
+                foreach (CriticalEffect criticalEffect in enemyAttack.CriticalEffects)
+                {
+                    isCriticalEffected = criticalEffect.isEffect();
+                }
 
                 enemyAttackInfo(damage, enemyAttack.Name);
 
@@ -171,7 +183,21 @@ namespace Little_Fighter
 
                 enemyAttackAnim(gameData.Enemy.Anims["attack"]);
 
+                if(damage != 0)
+                {
+                    hurtAnim();
+                }
+
                 timerEnemyAttack.Stop();
+            }
+        }
+
+        void enemyAttackEnd_timer(object sender, EventArgs e)
+        {
+            if (isCriticalEffected)
+            {
+                hurtAnim();
+                isEnemyAttack = false;
             }
         }
 
@@ -187,7 +213,8 @@ namespace Little_Fighter
 
             enemy.Margin = new Thickness(0, 0, 750 + (150 / gameData.Enemy.Size), 0);
 
-            hurtAnim();
+            isEnemyAttack = true;
+
         }
 
         void enemyDeathAnim()
@@ -344,8 +371,7 @@ namespace Little_Fighter
             jumpAttackButton.IsEnabled = true;
         }
 
-        // ACTION BUTTONS
-        private void fastAttack_click(object sender, RoutedEventArgs e)
+        void attack()
         {
             if (!isAttack && isGame)
             {
@@ -361,6 +387,12 @@ namespace Little_Fighter
                 timerCanAttack.Start();
                 timerEnemyAttack.Start();
             }
+        }
+
+        // ACTION BUTTONS
+        private void fastAttack_click(object sender, RoutedEventArgs e)
+        {
+            attack();
         }
 
         private void jumpAttack_click(object sender, RoutedEventArgs e)

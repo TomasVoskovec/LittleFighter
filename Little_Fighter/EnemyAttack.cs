@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Little_Fighter
 {
-    public class Attack
+    public class EnemyAttack
     {
         public string Name { get; set; }
 
         public int Strenght { get; set; }
         public int ChanceToMiss { get; set; }
-        
-        public bool CriticalEffect { get; set; } = false;
 
-        public Attack(string name, int strenght, int chanceToMiss, bool criticalEffect = false)
+        public List<CriticalEffect> CriticalEffects { get; set; }
+
+        public EnemyAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects)
         {
             this.Name = name;
             this.Strenght = strenght;
             this.ChanceToMiss = chanceToMiss;
-            this.CriticalEffect = criticalEffect;
+            this.CriticalEffects = criticalEffects;
         }
 
         public int Damage(Player player, Enemy enemy)
