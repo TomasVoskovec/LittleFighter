@@ -160,10 +160,12 @@ namespace Little_Fighter
         {
             if (isGame)
             {
-                int damage = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)].Damage(gameData.Player, gameData.Enemy);
+                Attack enemyAttack = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)];
+
+                int damage = enemyAttack.Damage(gameData.Player, gameData.Enemy);
                 gameData.Player.HP = gameData.Player.HP - damage;
 
-                enemyAttackInfo(damage);
+                enemyAttackInfo(damage, enemyAttack.Name);
 
                 updateStats();
 
@@ -262,11 +264,18 @@ namespace Little_Fighter
         }
 
         // Write info about enemy attack in game console
-        private void enemyAttackInfo(int damage)
+        private void enemyAttackInfo(int damage, string attackName = "")
         {
             if (damage > 0)
             {
-                gameConsoleInfo.Text = gameConsoleInfo.Text + "Enemy dealed " + damage + " demage \n";
+                if (attackName != "")
+                {
+                    gameConsoleInfo.Text = gameConsoleInfo.Text + "Enemy dealed " + damage + " demage (" + attackName + ") \n";
+                }
+                else
+                {
+                    gameConsoleInfo.Text = gameConsoleInfo.Text + "Enemy dealed " + damage + " demage \n";
+                }
             }
             else
             {

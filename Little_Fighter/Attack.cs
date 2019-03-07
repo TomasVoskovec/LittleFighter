@@ -8,15 +8,16 @@ namespace Little_Fighter
 {
     public class Attack
     {
-        Random rn = new Random();
+        public string Name { get; set; }
 
         public int Strenght { get; set; }
         public int ChanceToMiss { get; set; }
         
         public bool CriticalEffect { get; set; } = false;
 
-        public Attack(int strenght, int chanceToMiss, bool criticalEffect = false)
+        public Attack(string name, int strenght, int chanceToMiss, bool criticalEffect = false)
         {
+            this.Name = name;
             this.Strenght = strenght;
             this.ChanceToMiss = chanceToMiss;
             this.CriticalEffect = criticalEffect;
@@ -24,9 +25,11 @@ namespace Little_Fighter
 
         public int Damage(Player player, Enemy enemy)
         {
+            Random rn = new Random();
+
             int missChance = rn.Next(0, 100);
 
-            if (missChance >= 100 - missChance)
+            if (missChance >= 100 - this.ChanceToMiss)
             {
                 return 0;
             }
