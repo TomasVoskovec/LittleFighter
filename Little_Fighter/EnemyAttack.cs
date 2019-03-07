@@ -27,15 +27,22 @@ namespace Little_Fighter
         {
             Random rn = new Random();
 
-            int missChance = rn.Next(0, 100);
+            int missChance = rn.Next(0, 101);
 
-            if (missChance >= 100 - this.ChanceToMiss)
+            if (missChance <= 100 - this.ChanceToMiss - player.Speed + enemy.Speed)
             {
-                return 0;
+                int rndValue = Strenght * (Convert.ToInt32(enemy.Attack) - Convert.ToInt32(player.Defense));
+
+                int damage = rn.Next(rndValue, rndValue + 1);
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+                return damage + rn.Next(1, 3);
             }
             else
             {
-                return rn.Next(Strenght * (Convert.ToInt32(enemy.Attack) - player.Defense), (Strenght * 2) * (Convert.ToInt32(enemy.Attack) - player.Defense)) + rn.Next(1,3);
+                return 0;
             }
         }
     }

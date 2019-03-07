@@ -61,7 +61,6 @@ namespace Little_Fighter
         bool isGame = true;
         bool isCriticalEffected = false;
         bool isEnemyCriticalEffected = false;
-        bool isHurtAnim = false;
 
         // Start game action
         void startGame()
@@ -74,6 +73,26 @@ namespace Little_Fighter
             statsPlayer.Maximum = gameData.Player.MaxHP;
             statsEnemy.Value = gameData.Player.HP;
             playerHp.Content = gameData.Player.HP + " HP";
+
+            loadButtons();
+        }
+
+        void loadButtons()
+        {
+            foreach (KeyValuePair<string, PlayerAttack> attack in gameData.Player.Attacks)
+            {
+                Button newButton = new Button();
+                newButton.SetValue(Grid.RowProperty, 2);
+                newButton.Width = 200;
+                newButton.Height = 40;
+                newButton.Margin = new Thickness(5);
+                newButton.Content = attack.Key;
+                newButton.FontSize = 15;
+                newButton.FontWeight = FontWeights.Bold;
+                newButton.Click += attack_click;
+
+                actionBtns.Children.Add(newButton);
+            }
         }
 
         // Delays
@@ -172,9 +191,16 @@ namespace Little_Fighter
                 int damage = enemyAttack.Damage(gameData.Player, gameData.Enemy);
                 gameData.Player.HP = gameData.Player.HP - damage;
 
-                foreach (CriticalEffect criticalEffect in enemyAttack.CriticalEffects)
+                if (!isCriticalEffected)
                 {
-                    isCriticalEffected = criticalEffect.isEffect();
+                    foreach (CriticalEffect criticalEffect in enemyAttack.CriticalEffects)
+                    {
+                        if (isCriticalEffected == criticalEffect.isEffect())
+                        {
+                            isCriticalEffected = true;
+                            break;
+                        }
+                    }
                 }
 
                 enemyAttackInfo(damage, enemyAttack.Name);
@@ -276,11 +302,18 @@ namespace Little_Fighter
         }
 
         // Write info about attack in game console
-        private void attackInfo(int damage)
+        private void attackInfo(int damage, string attackName = "")
         {
             if (damage > 0)
             {
-                gameConsoleInfo.Text = gameConsoleInfo.Text + "You dealed " + damage + " demage \n";
+                if (attackName != "")
+                {
+                    gameConsoleInfo.Text = gameConsoleInfo.Text + "You dealed " + damage + " demage (" + attackName + ") \n";
+                }
+                else
+                {
+                    gameConsoleInfo.Text = gameConsoleInfo.Text + "You dealed " + damage + " demage \n";
+                }
             }
             else
             {
@@ -359,28 +392,55 @@ namespace Little_Fighter
 
         void disableButtons()
         {
-            defButton.IsEnabled = false;
-            fastAttackButton.IsEnabled = false;
-            jumpAttackButton.IsEnabled = false;
+            foreach (object child in actionBtns.Children)
+            {
+                if (child is Button)
+                {
+                    Button button = child as Button;
+
+                    button.IsEnabled = false;
+                }
+            }
         }
 
         void enableButtons()
         {
-            defButton.IsEnabled = true;
-            fastAttackButton.IsEnabled = true;
-            jumpAttackButton.IsEnabled = true;
+            foreach (object child in actionBtns.Children)
+            {
+                if (child is Button)
+                {
+                    Button button = child as Button;
+
+                    button.IsEnabled = true;
+                }
+            }
         }
 
-        void attack()
+        // PLayer attack action
+        void attackAction(string name)
         {
             if (!isAttack && isGame)
             {
-                attackAnim(gameData.Player.Anims["fastAttack"]);
+                attackAnim(gameData.Player.Anims[name]);
 
-                int damage = gameData.FastAttack();
-                gameData.Enemy.HP = gameData.Enemy.HP - damage;
+                PlayerAttack playerAttack = gameData.Player.Attacks[name];
 
-                //attackInfo(damage);
+                int damage = playerAttack.Damage(gameData.Player, gameData.Enemy);
+                gameData.Enemy.HP -= damage;
+
+                if (!isCriticalEffected)
+                {
+                    foreach (CriticalEffect criticalEffect in playerAttack.CriticalEffects)
+                    {
+                        if (isCriticalEffected == criticalEffect.isEffect())
+                        {
+                            isCriticalEffected = true;
+                            break;
+                        }
+                    }
+                }
+
+                attackInfo(damage, name);
 
                 updateStats();
 
@@ -390,27 +450,11 @@ namespace Little_Fighter
         }
 
         // ACTION BUTTONS
-        private void fastAttack_click(object sender, RoutedEventArgs e)
+        private void attack_click(object sender, RoutedEventArgs e)
         {
-            attack();
-        }
+            Button attackBtn = (Button)sender;
 
-        private void jumpAttack_click(object sender, RoutedEventArgs e)
-        {
-            if (!isAttack)
-            {
-                attackAnim(gameData.Player.Anims["jumpAttack"]);
-
-                int damage = gameData.JumpAttack();
-                gameData.Enemy.HP = gameData.Enemy.HP - damage;
-
-                attackInfo(damage);
-
-                updateStats();
-
-                timerCanAttack.Start();
-                timerEnemyAttack.Start();
-            }
+            attackAction(attackBtn.Content.ToString());
         }
 
         private void def_click(object sender, RoutedEventArgs e)
@@ -443,7 +487,7 @@ namespace Little_Fighter
                 isDeath = false;
                 if (!isEnemyDeath)
                 {
-                    enableButtons();
+                    //enableButtons();
                     isGame = true;
                 }
                 idleAnim();
@@ -463,7 +507,7 @@ namespace Little_Fighter
                 enemy.Visibility = Visibility.Visible;
                 if (!isDeath)
                 {
-                    enableButtons();
+                    //enableButtons();
                     isGame = true;
                 }
                 isEnemyDeath = false;

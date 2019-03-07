@@ -20,7 +20,7 @@ namespace Little_Fighter
         Random rn = new Random();
 
         // returns value of Fast Attack damage
-        public int FastAttack()
+        /*public int FastAttack()
         {
             int damage;
             int missChance;
@@ -33,14 +33,14 @@ namespace Little_Fighter
             }
             else
             {
-                damage = rn.Next(2 * this.Player.Attack, 5 * this.Player.Attack) + rn.Next(1, 3);
+                damage = rn.Next(2 * Convert.ToInt32(this.Player.Attack), 5 * Convert.ToInt32(this.Player.Attack)) + rn.Next(1, 3);
             }
 
             return damage;
-        }
+        }*/
 
         //returns value of Jump Attack damage
-        public int JumpAttack()
+        /*public int JumpAttack()
         {
             int damage;
             int missChance;
@@ -53,11 +53,11 @@ namespace Little_Fighter
             }
             else
             {
-                damage = rn.Next(5 * this.Player.Attack, 10 * this.Player.Attack);
+                damage = rn.Next(5 * Convert.ToInt32(this.Player.Attack), 10 * Convert.ToInt32(this.Player.Attack));
             }
 
             return damage;
-        }
+        }*/
 
         public bool isGameOver()
         {

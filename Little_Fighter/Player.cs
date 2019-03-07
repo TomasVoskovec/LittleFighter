@@ -10,14 +10,14 @@ namespace Little_Fighter
     {
         // Character animation
         public Dictionary<string, Uri> Anims { get; set; }
-        public List<PlayerAttack> Attacks { get; set; }
+        public Dictionary<string, PlayerAttack> Attacks { get; set; }
 
         public int MaxHP { get; set; }
         public int HP { get; set; }
         public int XP { get; set; }
-        public int Attack { get; set; }
-        public int Defense { get; set; }
-        public int Speed { get; set; }
+        public float Attack { get; set; }
+        public float Defense { get; set; }
+        public float Speed { get; set; }
 
         public Player()
         {
@@ -27,16 +27,18 @@ namespace Little_Fighter
             this.Anims.Add("after_death", new Uri("img/anim/after_death.gif", UriKind.Relative));
             this.Anims.Add("hurt", new Uri("img/anim/hurt.gif", UriKind.Relative));
             this.Anims.Add("def", new Uri("img/anim/def.gif", UriKind.Relative));
-            this.Anims.Add("fastAttack", new Uri("img/anim/attack.gif", UriKind.Relative));
-            this.Anims.Add("jumpAttack", new Uri("img/anim/jump_attack.gif", UriKind.Relative));
+            this.Anims.Add("Fast Attack", new Uri("img/anim/attack.gif", UriKind.Relative));
+            this.Anims.Add("Jump Attack", new Uri("img/anim/jump_attack.gif", UriKind.Relative));
 
-            this.Attacks = new List<PlayerAttack>();
+            this.Attacks = new Dictionary<string, PlayerAttack>();
+            this.Attacks.Add("Fast Attack", new PlayerAttack("Fast Attack", 1, 25, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }));
+            this.Attacks.Add("Jump Attack", new PlayerAttack("Jump Attack", 2, 75, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }));
 
             this.MaxHP = 30;
             this.HP = this.MaxHP;
             this.XP = 0;
-            this.Attack = 1;
-            this.Defense = 1;
+            this.Attack = 7;
+            this.Defense = 2;
             this.Speed = 1;
         }
     }

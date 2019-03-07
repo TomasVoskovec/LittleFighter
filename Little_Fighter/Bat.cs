@@ -17,7 +17,7 @@ namespace Little_Fighter
 
             this.MaxHP = 20 + (20 / 10 * lvl);
             this.HP = this.MaxHP;
-            this.Attack = 2 + (20 * lvl / 100);
+            this.Attack = 4 + (20 * lvl / 100);
             this.Defense = 1 + (20 * lvl / 100);
             this.Speed = 30 + (20 * lvl / 100);
             this.Size = 1 + (20 * lvl / 100);
