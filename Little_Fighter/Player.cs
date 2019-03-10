@@ -27,13 +27,11 @@ namespace Little_Fighter
             this.Anims.Add("after_death", new Uri("img/anim/after_death.gif", UriKind.Relative));
             this.Anims.Add("hurt", new Uri("img/anim/hurt.gif", UriKind.Relative));
             this.Anims.Add("def", new Uri("img/anim/def.gif", UriKind.Relative));
-            this.Anims.Add("Fast Attack", new Uri("img/anim/attack.gif", UriKind.Relative));
-            this.Anims.Add("Jump Attack", new Uri("img/anim/jump_attack.gif", UriKind.Relative));
 
             this.Attacks = new Dictionary<string, PlayerAttack>();
-            this.Attacks.Add("Fast Attack", new PlayerAttack("Fast Attack", 1, 25, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }));
-            this.Attacks.Add("Jump Attack", new PlayerAttack("Jump Attack", 2, 75, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }));
-
+            this.Attacks.Add("Fast Attack", new PlayerAttack("Fast Attack", 1, 25, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }, new Uri("img/anim/attack.gif", UriKind.Relative)));
+            this.Attacks.Add("Jump Attack", new PlayerAttack("Jump Attack", 2, 75, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }, new Uri("img/anim/jump_attack.gif", UriKind.Relative)));
+            
             this.MaxHP = 30;
             this.HP = this.MaxHP;
             this.XP = 0;

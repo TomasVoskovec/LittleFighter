@@ -14,13 +14,15 @@ namespace Little_Fighter
         public int ChanceToMiss { get; set; }
 
         public List<CriticalEffect> CriticalEffects { get; set; }
+        public Uri Anim { get; set; }
 
-        public EnemyAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects)
+        public EnemyAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects, Uri anim)
         {
             this.Name = name;
             this.Strenght = strenght;
             this.ChanceToMiss = chanceToMiss;
             this.CriticalEffects = criticalEffects;
+            this.Anim = anim;
         }
 
         public int Damage(Player player, Enemy enemy)

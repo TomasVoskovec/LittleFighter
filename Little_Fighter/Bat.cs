@@ -12,7 +12,6 @@ namespace Little_Fighter
         {
             this.Anims = new Dictionary<string, Uri>();
             this.Anims.Add("idle", new Uri("img/anim/bat_idle.gif", UriKind.Relative));
-            this.Anims.Add("attack", new Uri("img/anim/bat_attack.gif", UriKind.Relative));
             this.Anims.Add("hurt", new Uri("img/anim/bat_hurt.gif", UriKind.Relative));
 
             this.MaxHP = 20 + (20 / 10 * lvl);
@@ -22,7 +21,7 @@ namespace Little_Fighter
             this.Speed = 30 + (20 * lvl / 100);
             this.Size = 1 + (20 * lvl / 100);
 
-            this.Attacks.Add(new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }));
+            this.Attacks.Add("Bite", new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }, new Uri("img/anim/bat_attack.gif", UriKind.Relative)));
         }
     }
 }

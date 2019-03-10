@@ -17,6 +17,6 @@ namespace Little_Fighter
         public float Speed { get; set; }
         public float Size { get; set; }
 
-        public List<EnemyAttack> Attacks { get; set; } = new List<EnemyAttack>();
+        public Dictionary<string, EnemyAttack> Attacks { get; set; } = new Dictionary<string, EnemyAttack>();
     }
 }

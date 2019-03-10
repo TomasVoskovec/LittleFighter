@@ -36,8 +36,8 @@ namespace Little_Fighter
             timerEnemyAttack.Interval = TimeSpan.FromSeconds(1);
             timerEnemyAttack.Tick += new EventHandler(enemyAttack_timer);
 
-            timerEndEnemyAttack.Interval = TimeSpan.FromSeconds(0.5);
-            timerEndEnemyAttack.Tick += new EventHandler(enemyAttackEnd_timer);
+            timerAttackEnd.Interval = TimeSpan.FromSeconds(1);
+            timerAttackEnd.Tick += new EventHandler(attackEnd_timer);
 
             //gameData.Player.HP = 1;
         }
@@ -45,22 +45,21 @@ namespace Little_Fighter
         // Objects
         DispatcherTimer timerCanAttack = new DispatcherTimer();
         DispatcherTimer timerEnemyAttack = new DispatcherTimer();
-        DispatcherTimer timerEndEnemyAttack = new DispatcherTimer();
+        DispatcherTimer timerAttackEnd = new DispatcherTimer();
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" , "suicide", "dýl dymič"};
         Stack<string> lastConsoleComands = new Stack<string>();
         static Random rn = new Random();
-        GameData gameData = new GameData(new Player(), new Bat());
+        GameData gameData = new GameData(new Player(), new Bat(), new List<CriticalEffect>(), new List<CriticalEffect>());
 
         int lastCommandIndex = 0;
 
         // Bools
         bool isAttack;
-        bool isEnemyAttack;
+        bool isAttackInProgress;
         bool isEnemyDeath = false;
         bool isDeath = false;
         bool isGame = true;
         bool isCriticalEffected = false;
-        bool isEnemyCriticalEffected = false;
 
         // Start game action
         void startGame()
@@ -93,6 +92,17 @@ namespace Little_Fighter
 
                 actionBtns.Children.Add(newButton);
             }
+        }
+
+        string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
         }
 
         // Delays
@@ -180,25 +190,46 @@ namespace Little_Fighter
         void enemyAttack_timer(object sender, EventArgs e)
         {
             enemyAttack();
+
+            timerAttackEnd.Start();
+        }
+
+        IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
+        {
+            Random rand = new Random();
+            List<TValue> values = Enumerable.ToList(dict.Values);
+            int size = dict.Count;
+
+            yield return values[rand.Next(size)];
         }
 
         void enemyAttack()
         {
             if (isGame)
             {
-                EnemyAttack enemyAttack = gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)];
+                //gameData.Enemy.Attacks[rn.Next(0, gameData.Enemy.Attacks.Count() - 1)];
+                EnemyAttack enemyAttack = null;
 
-                int damage = enemyAttack.Damage(gameData.Player, gameData.Enemy);
+                foreach (EnemyAttack value in RandomValues(gameData.Enemy.Attacks))
+                {
+                    enemyAttack = value;
+                }
+
+                int damage = 0;
+                if (enemyAttack != null)
+                {
+                    damage = enemyAttack.Damage(gameData.Player, gameData.Enemy);
+                }
+                
                 gameData.Player.HP = gameData.Player.HP - damage;
 
-                if (!isCriticalEffected)
+                foreach (CriticalEffect criticalEffect in enemyAttack.CriticalEffects)
                 {
-                    foreach (CriticalEffect criticalEffect in enemyAttack.CriticalEffects)
+                    if (criticalEffect.isEffect())
                     {
-                        if (isCriticalEffected == criticalEffect.isEffect())
+                        if (!gameData.PlayerCriticalEffects.Contains(criticalEffect))
                         {
-                            isCriticalEffected = true;
-                            break;
+                            gameData.PlayerCriticalEffects.Add(criticalEffect);
                         }
                     }
                 }
@@ -207,7 +238,7 @@ namespace Little_Fighter
 
                 updateStats();
 
-                enemyAttackAnim(gameData.Enemy.Anims["attack"]);
+                enemyAttackAnim(enemyAttack.Anim);
 
                 if(damage != 0)
                 {
@@ -218,13 +249,68 @@ namespace Little_Fighter
             }
         }
 
-        void enemyAttackEnd_timer(object sender, EventArgs e)
+        void criticalEffectsInfo(string name, int damage)
         {
-            if (isCriticalEffected)
+            gameConsoleInfo.Text += "You have been hurt by " + name + " (-" + damage + " HP) \n";
+
+            gameConsoleInfo.ScrollToEnd();
+        }
+
+        void enemyCriticalEffectsInfo(string name, int damage)
+        {
+            gameConsoleInfo.Text += "Enemy hurt by " + name + " (-" + damage + " HP) \n";
+
+            gameConsoleInfo.ScrollToEnd();
+        }
+
+        void criticalEffectsAction()
+        {
+            if (gameData.PlayerCriticalEffects.Any())
             {
                 hurtAnim();
-                isEnemyAttack = false;
+
+                if (gameData.PlayerCriticalEffects.Any())
+                {
+                    foreach (CriticalEffect criticalEffect in gameData.PlayerCriticalEffects)
+                    {
+                        int damage = criticalEffect.GetDamage();
+
+                        gameData.Player.HP -= damage;
+                        updateStats();
+
+                        criticalEffectsInfo(criticalEffect.Name, damage);
+                    }
+                }
             }
+
+            if (gameData.EnemyCriticalEffects.Any())
+            {
+                enemyHurtAnim();
+
+                if (gameData.EnemyCriticalEffects.Any())
+                {
+                    foreach (CriticalEffect criticalEffect in gameData.EnemyCriticalEffects)
+                    {
+                        int damage = criticalEffect.GetDamage();
+
+                        gameData.Enemy.HP -= damage;
+                        updateStats();
+
+                        enemyCriticalEffectsInfo(criticalEffect.Name, damage);
+                    }
+                }
+            }
+        }
+
+        void attackEnd_timer(object sender, EventArgs e)
+        {
+            if (isGame)
+            {
+                criticalEffectsAction();
+            }
+
+            isAttackInProgress = false;
+            timerAttackEnd.Stop();
         }
 
         void enemyAttackAnim(Uri animationUri)
@@ -239,7 +325,7 @@ namespace Little_Fighter
 
             enemy.Margin = new Thickness(0, 0, 750 + (150 / gameData.Enemy.Size), 0);
 
-            isEnemyAttack = true;
+            isAttackInProgress = true;
 
         }
 
@@ -421,21 +507,20 @@ namespace Little_Fighter
         {
             if (!isAttack && isGame)
             {
-                attackAnim(gameData.Player.Anims[name]);
+                attackAnim(gameData.Player.Attacks[name].Anim);
 
                 PlayerAttack playerAttack = gameData.Player.Attacks[name];
 
                 int damage = playerAttack.Damage(gameData.Player, gameData.Enemy);
                 gameData.Enemy.HP -= damage;
 
-                if (!isCriticalEffected)
+                foreach (CriticalEffect criticalEffect in playerAttack.CriticalEffects)
                 {
-                    foreach (CriticalEffect criticalEffect in playerAttack.CriticalEffects)
+                    if (criticalEffect.isEffect())
                     {
-                        if (isCriticalEffected == criticalEffect.isEffect())
+                        if (!gameData.EnemyCriticalEffects.Contains(criticalEffect))
                         {
-                            isCriticalEffected = true;
-                            break;
+                            gameData.EnemyCriticalEffects.Add(criticalEffect);
                         }
                     }
                 }
