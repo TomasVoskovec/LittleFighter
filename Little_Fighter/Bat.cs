@@ -15,7 +15,7 @@ namespace Little_Fighter
             this.Anims.Add("hurt", new Uri("img/anim/bat_hurt.gif", UriKind.Relative));
 
             this.MaxHP = 20 + (20 / 10 * lvl);
-            this.HP = this.MaxHP;
+            this.HP = Convert.ToInt32(this.MaxHP);
             this.Attack = 4 + (20 * lvl / 100);
             this.Defense = 1 + (20 * lvl / 100);
             this.Speed = 30 + (20 * lvl / 100);

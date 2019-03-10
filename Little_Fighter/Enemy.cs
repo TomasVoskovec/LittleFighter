@@ -11,7 +11,7 @@ namespace Little_Fighter
         public Dictionary<string, Uri> Anims { get; set; }
 
         public float MaxHP { get; set; }
-        public float HP { get; set; }
+        public int HP { get; set; }
         public float Attack { get; set; }
         public float Defense { get; set; }
         public float Speed { get; set; }

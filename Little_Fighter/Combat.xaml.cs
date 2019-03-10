@@ -59,7 +59,6 @@ namespace Little_Fighter
         bool isEnemyDeath = false;
         bool isDeath = false;
         bool isGame = true;
-        bool isCriticalEffected = false;
 
         // Start game action
         void startGame()
@@ -572,7 +571,7 @@ namespace Little_Fighter
                 isDeath = false;
                 if (!isEnemyDeath)
                 {
-                    //enableButtons();
+                    enableButtons();
                     isGame = true;
                 }
                 idleAnim();
@@ -587,12 +586,12 @@ namespace Little_Fighter
             }
             else if (command == "heal enemy")
             {
-                gameData.Enemy.HP = gameData.Enemy.MaxHP;
+                gameData.Enemy.HP = Convert.ToInt32(gameData.Enemy.MaxHP);
                 updateStats();
                 enemy.Visibility = Visibility.Visible;
                 if (!isDeath)
                 {
-                    //enableButtons();
+                    enableButtons();
                     isGame = true;
                 }
                 isEnemyDeath = false;
