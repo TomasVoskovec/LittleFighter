@@ -83,7 +83,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Efectivity.cs" />
     <Compile Include="Effect.cs" />
+    <Compile Include="Element.cs" />
     <Compile Include="EnemyAttack.cs" />
     <Compile Include="Bat.cs" />
     <Compile Include="Combat.xaml.cs">

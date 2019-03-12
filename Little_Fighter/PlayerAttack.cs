@@ -14,19 +14,17 @@ namespace Little_Fighter
         public int ChanceToMiss { get; set; }
 
         public List<CriticalEffect> CriticalEffects { get; set; }
-        public List<Enemy> HighEffectedEnemies { get; set; }
-        public List<Enemy> LowEffectedEnemies { get; set; }
+        public Element Element { get; set; }
         public Uri Anim { get; set; }
 
-        public PlayerAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects, Uri anim, List<Enemy> highEffectedEnemies, List<Enemy> lowEffectedEnemies)
+        public PlayerAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects, Uri anim, Element element)
         {
             this.Name = name;
             this.Strenght = strenght;
             this.ChanceToMiss = chanceToMiss;
             this.CriticalEffects = criticalEffects;
             this.Anim = anim;
-            this.HighEffectedEnemies = highEffectedEnemies;
-            this.LowEffectedEnemies = lowEffectedEnemies;
+            this.Element = element;
         }
 
         public int Damage(Player player, Enemy enemy)
@@ -41,26 +39,13 @@ namespace Little_Fighter
 
                 int damage = rn.Next(rndValue, rndValue + 1);
 
-                if (HighEffectedEnemies != null)
+                if (new Efectivity(this.Element).GetEfectivityValue(enemy.Element) == Efectivity.EfectivityValue.Heigh)
                 {
-                    foreach (Enemy highEffectedEnemy in HighEffectedEnemies)
-                    {
-                        if (enemy.GetType() is highEffectedEnemy.GetType)
-                        {
-                            damage += rn.Next(1, Strenght);
-                        }
-                    }
+                    damage += rn.Next(1, Strenght);
                 }
-
-                if (LowEffectedEnemies != null)
+                else if (new Efectivity(this.Element).GetEfectivityValue(enemy.Element) == Efectivity.EfectivityValue.Low)
                 {
-                    foreach (Enemy highEffectedEnemy in HighEffectedEnemies)
-                    {
-                        if (enemy == highEffectedEnemy)
-                        {
-                            damage -= rn.Next(1, Convert.ToInt32(enemy.Defense));
-                        }
-                    }
+                    damage -= rn.Next(1, Strenght);
                 }
 
                 if (damage < 0)

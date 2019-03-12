@@ -513,13 +513,16 @@ namespace Little_Fighter
                 int damage = playerAttack.Damage(gameData.Player, gameData.Enemy);
                 gameData.Enemy.HP -= damage;
 
-                foreach (CriticalEffect criticalEffect in playerAttack.CriticalEffects)
+                if (damage > 0)
                 {
-                    if (criticalEffect.isEffect())
+                    foreach (CriticalEffect criticalEffect in playerAttack.CriticalEffects)
                     {
-                        if (!gameData.EnemyCriticalEffects.Contains(criticalEffect))
+                        if (criticalEffect.isEffect())
                         {
-                            gameData.EnemyCriticalEffects.Add(criticalEffect);
+                            if (!gameData.EnemyCriticalEffects.Contains(criticalEffect))
+                            {
+                                gameData.EnemyCriticalEffects.Add(criticalEffect);
+                            }
                         }
                     }
                 }

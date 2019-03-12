@@ -29,8 +29,8 @@ namespace Little_Fighter
             this.Anims.Add("def", new Uri("img/anim/def.gif", UriKind.Relative));
 
             this.Attacks = new Dictionary<string, PlayerAttack>();
-            this.Attacks.Add("Fast Attack", new PlayerAttack("Fast Attack", 1, 25, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }, new Uri("img/anim/attack.gif", UriKind.Relative), new List<Enemy> { new Bat() }, new List<Enemy>()));
-            this.Attacks.Add("Jump Attack", new PlayerAttack("Jump Attack", 2, 75, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }, new Uri("img/anim/jump_attack.gif", UriKind.Relative), new List<Enemy>(), new List<Enemy>()));
+            this.Attacks.Add("Fast Attack", new PlayerAttack("Fast Attack", 1, 25, new List<CriticalEffect>() { new CriticalEffect("Bleading", 1, 100) }, new Uri("img/anim/attack.gif", UriKind.Relative), new Element("Fight", new List<Element> { new Element("Poison") })));
+            this.Attacks.Add("Jump Attack", new PlayerAttack("Jump Attack", 2, 75, new List<CriticalEffect> { new CriticalEffect("Bleading", 1, 100) }, new Uri("img/anim/jump_attack.gif", UriKind.Relative), new Element("Fight")));
             
             this.MaxHP = 30;
             this.HP = this.MaxHP;

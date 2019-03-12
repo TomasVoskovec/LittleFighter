@@ -10,6 +10,7 @@ namespace Little_Fighter
     {
         public Bat(int lvl = 1)
         {
+            this.Element = new Element("sss");
             this.Anims = new Dictionary<string, Uri>();
             this.Anims.Add("idle", new Uri("img/anim/bat_idle.gif", UriKind.Relative));
             this.Anims.Add("hurt", new Uri("img/anim/bat_hurt.gif", UriKind.Relative));

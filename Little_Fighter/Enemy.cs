@@ -9,6 +9,7 @@ namespace Little_Fighter
     public abstract class Enemy
     {
         public Dictionary<string, Uri> Anims { get; set; }
+        public Element Element { get; set; }
 
         public float MaxHP { get; set; }
         public int HP { get; set; }
