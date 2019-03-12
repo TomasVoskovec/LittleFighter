@@ -55,7 +55,6 @@ namespace Little_Fighter
 
         // Bools
         bool isAttack;
-        bool isAttackInProgress;
         bool isEnemyDeath = false;
         bool isDeath = false;
         bool isGame = true;
@@ -307,8 +306,6 @@ namespace Little_Fighter
             {
                 criticalEffectsAction();
             }
-
-            isAttackInProgress = false;
             timerAttackEnd.Stop();
         }
 
@@ -323,8 +320,6 @@ namespace Little_Fighter
             ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
 
             enemy.Margin = new Thickness(0, 0, 750 + (150 / gameData.Enemy.Size), 0);
-
-            isAttackInProgress = true;
 
         }
 
@@ -633,12 +628,14 @@ namespace Little_Fighter
                 gameConsoleInfo.Text += "Max HP: " + gameData.Player.MaxHP + "\n";
                 gameConsoleInfo.Text += "Attack: " + gameData.Player.Attack + "\n";
                 gameConsoleInfo.Text += "Deffense: " + gameData.Player.Defense + "\n";
+                gameConsoleInfo.Text += "Speed: " + gameData.Player.Speed + "\n";
 
                 gameConsoleInfo.Text = gameConsoleInfo.Text + "\n-------- ENEMY -----------\n";
                 gameConsoleInfo.Text += "HP: " + gameData.Enemy.HP + "\n";
                 gameConsoleInfo.Text += "Max HP: " + gameData.Enemy.MaxHP + "\n";
                 gameConsoleInfo.Text += "Attack: " + gameData.Enemy.Attack + "\n";
                 gameConsoleInfo.Text += "Deffense: " + gameData.Enemy.Defense + "\n";
+                gameConsoleInfo.Text += "Speed: " + gameData.Enemy.Speed + "\n";
 
                 gameConsoleInfo.Text = gameConsoleInfo.Text + "\n##########################\n";
 

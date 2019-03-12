@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little_Fighter", "Little_Fighter\Little_Fighter.csproj", "{D14E2CFA-EC53-4AF8-97BF-BA4800B38F76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddElement", "AddElement\AddElement.csproj", "{33FE6B6B-6DD3-49ED-8377-8754A23DEB5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonClassLibrary", "JsonClassLibrary\JsonClassLibrary.csproj", "{FF988EF2-137D-4F03-8049-D629A942338F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D14E2CFA-EC53-4AF8-97BF-BA4800B38F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D14E2CFA-EC53-4AF8-97BF-BA4800B38F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D14E2CFA-EC53-4AF8-97BF-BA4800B38F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33FE6B6B-6DD3-49ED-8377-8754A23DEB5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33FE6B6B-6DD3-49ED-8377-8754A23DEB5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33FE6B6B-6DD3-49ED-8377-8754A23DEB5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33FE6B6B-6DD3-49ED-8377-8754A23DEB5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF988EF2-137D-4F03-8049-D629A942338F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF988EF2-137D-4F03-8049-D629A942338F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF988EF2-137D-4F03-8049-D629A942338F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF988EF2-137D-4F03-8049-D629A942338F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
