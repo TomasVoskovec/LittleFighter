@@ -18,13 +18,15 @@ namespace Little_Fighter
         public List<Enemy> LowEffectedEnemies { get; set; }
         public Uri Anim { get; set; }
 
-        public PlayerAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects, Uri anim)
+        public PlayerAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects, Uri anim, List<Enemy> highEffectedEnemies, List<Enemy> lowEffectedEnemies)
         {
             this.Name = name;
             this.Strenght = strenght;
             this.ChanceToMiss = chanceToMiss;
             this.CriticalEffects = criticalEffects;
             this.Anim = anim;
+            this.HighEffectedEnemies = highEffectedEnemies;
+            this.LowEffectedEnemies = lowEffectedEnemies;
         }
 
         public int Damage(Player player, Enemy enemy)
@@ -43,7 +45,7 @@ namespace Little_Fighter
                 {
                     foreach (Enemy highEffectedEnemy in HighEffectedEnemies)
                     {
-                        if (enemy == highEffectedEnemy)
+                        if (enemy.GetType() is highEffectedEnemy.GetType)
                         {
                             damage += rn.Next(1, Strenght);
                         }
