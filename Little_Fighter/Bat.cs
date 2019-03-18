@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Little_Fighter
 {
-    class Bat : Enemy
+    /*class Bat : Enemy
     {
         public Bat(int lvl = 1)
         {
@@ -24,5 +24,5 @@ namespace Little_Fighter
 
             this.Attacks.Add("Bite", new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }, new Uri("img/anim/bat_attack.gif", UriKind.Relative)));
         }
-    }
+    }*/
 }

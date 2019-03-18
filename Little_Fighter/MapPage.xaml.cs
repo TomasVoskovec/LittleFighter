@@ -27,7 +27,7 @@ namespace Little_Fighter
 
         private void nightField_click(object sender, RoutedEventArgs e)
         {
-            Map nightField = new NightFieldMap();
+            //Map nightField = new NightFieldMap();
 
             //NavigationService.Navigate(new Uri("/Views/Page.xaml?parameter=test", UriKind.Relative));
         }

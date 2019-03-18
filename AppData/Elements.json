@@ -1,1 +1,1 @@
-[{"Name":"Stone","HeighEfectivityElements":null,"LowEfectivityElements":null}]
+[{"Name":"Stone","HeighEfectivityElements":null,"LowEfectivityElements":null},{"Name":"Fire","HeighEfectivityElements":[{"Name":"Stone","HeighEfectivityElements":null,"LowEfectivityElements":null}],"LowEfectivityElements":[]}]

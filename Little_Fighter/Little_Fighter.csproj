@@ -118,7 +118,6 @@
     <Compile Include="MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="nightFieldMap.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerAttack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

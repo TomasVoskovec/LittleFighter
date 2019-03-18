@@ -42,6 +42,11 @@ namespace Little_Fighter
             //gameData.Player.HP = 1;
         }
 
+        void initializeGame()
+        {
+
+        }
+
         // Objects
         DispatcherTimer timerCanAttack = new DispatcherTimer();
         DispatcherTimer timerEnemyAttack = new DispatcherTimer();
@@ -49,7 +54,8 @@ namespace Little_Fighter
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" , "suicide", "dýl dymič"};
         Stack<string> lastConsoleComands = new Stack<string>();
         static Random rn = new Random();
-        GameData gameData = new GameData(new Player(), new Bat(), new List<CriticalEffect>(), new List<CriticalEffect>());
+        static Dictionary<string, Uri> enemyAnimos = new Dictionary<string, Uri>();
+        GameData gameData = new GameData(new Player(), new Enemy("Bat", new Element("sss"), enemyAnimos, new Dictionary<string, EnemyAttack>(), 10, 10, 10, 10, 1), new List<CriticalEffect>(), new List<CriticalEffect>());
 
         int lastCommandIndex = 0;
 

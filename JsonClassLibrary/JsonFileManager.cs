@@ -13,6 +13,7 @@ namespace JsonClassLibrary
         public JsonFileManager()
         {
             JsonFilePaths.Add("elements", @"../../../../AppData/Elements.json");
+            JsonFilePaths.Add("mobs", @"../../../../AppData/Mobs.json");
         }
 
         public void SendElement(Element data)
@@ -31,11 +32,25 @@ namespace JsonClassLibrary
             File.WriteAllText(filePath, JsonConvert.SerializeObject(elements));
         }
 
+        public void UpdateElementsList (List<Element> elements)
+        {
+            string filePath = this.JsonFilePaths["elements"];
+
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(elements));
+        }
+
         public List<Element> LoadElements()
         {
             string filePath = this.JsonFilePaths["elements"];
 
             return JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(filePath));
+        }
+
+        public List<Enemy> LoadMobs()
+        {
+            string filePath = this.JsonFilePaths["mobs"];
+
+            return JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText(filePath));
         }
     }
 }
