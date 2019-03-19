@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Little_Fighter
+namespace Core
 {
-    public class PlayerAttack
+    public class EnemyAttack
     {
         public string Name { get; set; }
 
@@ -14,17 +14,15 @@ namespace Little_Fighter
         public int ChanceToMiss { get; set; }
 
         public List<CriticalEffect> CriticalEffects { get; set; }
-        public Element Element { get; set; }
         public Uri Anim { get; set; }
 
-        public PlayerAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects, Uri anim, Element element)
+        public EnemyAttack(string name, int strenght, int chanceToMiss, List<CriticalEffect> criticalEffects, Uri anim)
         {
             this.Name = name;
             this.Strenght = strenght;
             this.ChanceToMiss = chanceToMiss;
             this.CriticalEffects = criticalEffects;
             this.Anim = anim;
-            this.Element = element;
         }
 
         public int Damage(Player player, Enemy enemy)
@@ -33,26 +31,15 @@ namespace Little_Fighter
 
             int missChance = rn.Next(0, 101);
 
-            if (missChance <= 100 - this.ChanceToMiss - enemy.Speed + player.Speed)
+            if (missChance <= 100 - this.ChanceToMiss - player.Speed + enemy.Speed)
             {
-                int rndValue = Strenght * (Convert.ToInt32(player.Attack) - Convert.ToInt32(enemy.Defense));
+                int rndValue = Strenght * (Convert.ToInt32(enemy.Attack) - Convert.ToInt32(player.Defense));
 
                 int damage = rn.Next(rndValue, rndValue + 1);
-
-                if (new Efectivity(this.Element).GetEfectivityValue(enemy.Element) == Efectivity.EfectivityValue.Heigh)
-                {
-                    damage += rn.Next(1, Strenght);
-                }
-                else if (new Efectivity(this.Element).GetEfectivityValue(enemy.Element) == Efectivity.EfectivityValue.Low)
-                {
-                    damage -= rn.Next(1, Strenght);
-                }
-
                 if (damage < 0)
                 {
                     damage = 0;
                 }
-
                 return damage + rn.Next(1, 3);
             }
             else

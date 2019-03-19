@@ -83,16 +83,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Efectivity.cs" />
-    <Compile Include="Effect.cs" />
-    <Compile Include="Element.cs" />
-    <Compile Include="EnemyAttack.cs" />
     <Compile Include="Bat.cs" />
     <Compile Include="Combat.xaml.cs">
       <DependentUpon>Combat.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CriticalEffect.cs" />
-    <Compile Include="Enemy.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameOver.xaml.cs">
       <DependentUpon>GameOver.xaml</DependentUpon>
@@ -118,8 +112,6 @@
     <Compile Include="MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs" />
-    <Compile Include="PlayerAttack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -194,6 +186,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\anim\after_death.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary1\Core.csproj">
+      <Project>{162cdaeb-37ad-4b13-bbde-1d31ec6be4f8}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsonClassLibrary\JsonClassLibrary.csproj">
+      <Project>{ff988ef2-137d-4f03-8049-d629a942338f}</Project>
+      <Name>JsonClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

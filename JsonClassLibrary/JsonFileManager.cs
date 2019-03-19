@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Little_Fighter;
+using Core;
 
 namespace JsonClassLibrary
 {
@@ -12,8 +12,10 @@ namespace JsonClassLibrary
 
         public JsonFileManager()
         {
-            JsonFilePaths.Add("elements", @"../../../../AppData/Elements.json");
-            JsonFilePaths.Add("mobs", @"../../../../AppData/Mobs.json");
+            //string startupPath = Environment.CurrentDirectory;
+
+            JsonFilePaths.Add("elements", @"" + AppData.AppDataPath + "/Elements.json");
+            JsonFilePaths.Add("mobs", @"" + AppData.AppDataPath + "/Mobs.json");
         }
 
         public void SendElement(Element data)
@@ -51,6 +53,22 @@ namespace JsonClassLibrary
             string filePath = this.JsonFilePaths["mobs"];
 
             return JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText(filePath));
+        }
+
+        public void SendMob(Enemy data)
+        {
+            string filePath = this.JsonFilePaths["mobs"];
+
+            List<Enemy> elements = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText(filePath));
+
+            if (elements == null)
+            {
+                elements = new List<Enemy>();
+            }
+
+            elements.Add(data);
+
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(elements));
         }
     }
 }

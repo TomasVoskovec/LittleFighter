@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Little_Fighter\Little_Fighter.csproj" />
+    <ProjectReference Include="..\ClassLibrary1\Core.csproj" />
   </ItemGroup>
 
 </Project>

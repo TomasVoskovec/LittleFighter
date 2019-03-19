@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Little_Fighter
+namespace Core
 {
     public abstract class Effect
     {

@@ -1,1 +1,1 @@
-[{"Name":"Stone","HeighEfectivityElements":null,"LowEfectivityElements":null},{"Name":"Fire","HeighEfectivityElements":[{"Name":"Stone","HeighEfectivityElements":null,"LowEfectivityElements":null}],"LowEfectivityElements":[]}]
+[{"Name":"Night","HeighEfectivityElements":[],"LowEfectivityElements":[]},{"Name":"Fire","HeighEfectivityElements":[{"Name":"Night","HeighEfectivityElements":[],"LowEfectivityElements":[]}],"LowEfectivityElements":null}]

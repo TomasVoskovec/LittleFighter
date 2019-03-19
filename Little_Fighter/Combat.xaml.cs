@@ -17,6 +17,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfAnimatedGif;
+using Core;
+using JsonClassLibrary;
 
 namespace Little_Fighter
 {
@@ -42,20 +44,40 @@ namespace Little_Fighter
             //gameData.Player.HP = 1;
         }
 
-        void initializeGame()
+        static GameData loadGameData()
         {
+            List<Enemy> enemies = new List<Enemy>();
 
+            foreach (Enemy enemy in loadedEnemies)
+            {
+                foreach (Element element in curentMap.Elements)
+                {
+                    if (enemy.Element.Name == element.Name)
+                    {
+                        enemies.Add(enemy);
+                    }
+                }
+            }
+
+            Enemy loadedEnemy = enemies[rn.Next(enemies.Count)];
+
+            return new GameData(new Player(), loadedEnemy, new List<CriticalEffect>(), new List<CriticalEffect>());
         }
 
         // Objects
+        static Random rn = new Random();
+
+        static List<Enemy> loadedEnemies = new JsonFileManager().LoadMobs();
+        GameData gameData = loadGameData();
+
+        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data", "suicide", "dýl dymič" };
+        Stack<string> lastConsoleComands = new Stack<string>();
+
+        static Map curentMap = new Map("Night field", "", new List<Element> { new Element("Night") });
+
         DispatcherTimer timerCanAttack = new DispatcherTimer();
         DispatcherTimer timerEnemyAttack = new DispatcherTimer();
         DispatcherTimer timerAttackEnd = new DispatcherTimer();
-        List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data" , "suicide", "dýl dymič"};
-        Stack<string> lastConsoleComands = new Stack<string>();
-        static Random rn = new Random();
-        static Dictionary<string, Uri> enemyAnimos = new Dictionary<string, Uri>();
-        GameData gameData = new GameData(new Player(), new Enemy("Bat", new Element("sss"), enemyAnimos, new Dictionary<string, EnemyAttack>(), 10, 10, 10, 10, 1), new List<CriticalEffect>(), new List<CriticalEffect>());
 
         int lastCommandIndex = 0;
 

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JsonClassLibrary;
-using Little_Fighter;
+using Core;
 
 namespace AddStuff
 {
@@ -24,12 +24,17 @@ namespace AddStuff
 
                 Console.Clear();
 
-                foreach (Element element in new JsonFileManager().LoadElements())
+                List<Element> loadedElements = new JsonFileManager().LoadElements();
+
+                if (loadedElements != null && loadedElements.Any())
                 {
-                    if (element.Name == elementName)
+                    foreach (Element element in new JsonFileManager().LoadElements())
                     {
-                        nameSelection = true;
-                        Console.WriteLine("This element already exist");
+                        if (element.Name == elementName)
+                        {
+                            nameSelection = true;
+                            Console.WriteLine("This element already exist");
+                        }
                     }
                 }
             }
@@ -121,9 +126,14 @@ namespace AddStuff
                         Console.WriteLine("ERROR: Wrong value");
                     }
                 }
+
+                if (!selectedElements.Any())
+                {
+                    selectedElements = null;
+                }
             }
 
-            return elements;
+            return selectedElements;
         }
 
         public void showElements (List<Element> elements)
