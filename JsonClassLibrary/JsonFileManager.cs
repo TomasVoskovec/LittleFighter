@@ -14,8 +14,8 @@ namespace JsonClassLibrary
         {
             //string startupPath = Environment.CurrentDirectory;
 
-            JsonFilePaths.Add("elements", @"" + AppData.AppDataPath + "/Elements.json");
-            JsonFilePaths.Add("mobs", @"" + AppData.AppDataPath + "/Mobs.json");
+            JsonFilePaths.Add("elements", @"../../../AppData/Elements.json");
+            JsonFilePaths.Add("mobs", @"../../../AppData/Mobs.json");
         }
 
         public void SendElement(Element data)

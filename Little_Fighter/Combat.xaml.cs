@@ -46,20 +46,22 @@ namespace Little_Fighter
 
         static GameData loadGameData()
         {
-            List<Enemy> enemies = new List<Enemy>();
+            List<Enemy> enemies = new JsonFileManager().LoadMobs();
 
-            foreach (Enemy enemy in loadedEnemies)
+            /*foreach (Enemy enemy in loadedEnemies)
             {
-                foreach (Element element in curentMap.Elements)
-                {
-                    if (enemy.Element.Name == element.Name)
-                    {
-                        enemies.Add(enemy);
-                    }
-                }
-            }
+                enemies.Add(enemy);
+            }*/
 
-            Enemy loadedEnemy = enemies[rn.Next(enemies.Count)];
+            //Enemy loadedEnemy = enemies[rn.Next(enemies.Count)];
+
+            Enemy loadedEnemy = new Enemy("Bat", new Element("sss"), new Dictionary<string, Uri>(), new Dictionary<string, EnemyAttack>(), 22, 5, 2, 0, 1);
+
+            loadedEnemy.Anims.Add("idle", new Uri("img/anim/bat_idle.gif", UriKind.Relative));
+            loadedEnemy.Anims.Add("hurt", new Uri("img/anim/bat_hurt.gif", UriKind.Relative));
+            loadedEnemy.Attacks.Add("Bite", new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }, new Uri("img/anim/bat_attack.gif", UriKind.Relative)));
+
+            loadedEnemy = enemies[0];
 
             return new GameData(new Player(), loadedEnemy, new List<CriticalEffect>(), new List<CriticalEffect>());
         }
@@ -67,13 +69,10 @@ namespace Little_Fighter
         // Objects
         static Random rn = new Random();
 
-        static List<Enemy> loadedEnemies = new JsonFileManager().LoadMobs();
         GameData gameData = loadGameData();
 
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data", "suicide", "dýl dymič" };
         Stack<string> lastConsoleComands = new Stack<string>();
-
-        static Map curentMap = new Map("Night field", "", new List<Element> { new Element("Night") });
 
         DispatcherTimer timerCanAttack = new DispatcherTimer();
         DispatcherTimer timerEnemyAttack = new DispatcherTimer();

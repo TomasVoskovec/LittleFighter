@@ -32,7 +32,7 @@ namespace AddStuff
         }
     }*/
 
-            Dictionary < string, Uri > batAnims= new Dictionary<string, Uri>();
+            Dictionary < string, Uri > batAnims = new Dictionary<string, Uri>();
             batAnims.Add("idle", new Uri(@"../../../../AppData/img/anim/bat_idle.gif", UriKind.Relative));
             batAnims.Add("hurt", new Uri(@"../../../../AppData/img/anim/bat_hurt.gif", UriKind.Relative));
 
