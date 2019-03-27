@@ -8,20 +8,8 @@ namespace JsonClassLibrary
 {
     public class JsonFileManager
     {
-        public Dictionary<string, string> JsonFilePaths { get; set; } = new Dictionary<string, string>();
-
-        public JsonFileManager()
+        public void SendElement(Element data, string filePath)
         {
-            //string startupPath = Environment.CurrentDirectory;
-
-            JsonFilePaths.Add("elements", @"../../../AppData/Elements.json");
-            JsonFilePaths.Add("mobs", @"../../../AppData/Mobs.json");
-        }
-
-        public void SendElement(Element data)
-        {
-            string filePath = this.JsonFilePaths["elements"];
-
             List<Element> elements = JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(filePath));
 
             if (elements == null)
@@ -34,31 +22,23 @@ namespace JsonClassLibrary
             File.WriteAllText(filePath, JsonConvert.SerializeObject(elements));
         }
 
-        public void UpdateElementsList (List<Element> elements)
+        public void UpdateElementsList (List<Element> elements, string filePath)
         {
-            string filePath = this.JsonFilePaths["elements"];
-
             File.WriteAllText(filePath, JsonConvert.SerializeObject(elements));
         }
 
-        public List<Element> LoadElements()
+        public List<Element> LoadElements(string filePath)
         {
-            string filePath = this.JsonFilePaths["elements"];
-
             return JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(filePath));
         }
 
-        public List<Enemy> LoadMobs()
+        public List<Enemy> LoadMobs(string filePath)
         {
-            string filePath = this.JsonFilePaths["mobs"];
-
             return JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText(filePath));
         }
 
-        public void SendMob(Enemy data)
+        public void SendMob(Enemy data, string filePath)
         {
-            string filePath = this.JsonFilePaths["mobs"];
-
             List<Enemy> elements = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText(filePath));
 
             if (elements == null)

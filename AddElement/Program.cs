@@ -33,14 +33,14 @@ namespace AddStuff
     }*/
 
             Dictionary < string, Uri > batAnims = new Dictionary<string, Uri>();
-            batAnims.Add("idle", new Uri(@"../../../../AppData/img/anim/bat_idle.gif", UriKind.Relative));
-            batAnims.Add("hurt", new Uri(@"../../../../AppData/img/anim/bat_hurt.gif", UriKind.Relative));
+            batAnims.Add("idle", new Uri("../../../AppData/img/anim/bat_idle.gif", UriKind.Relative));
+            batAnims.Add("hurt", new Uri("../../../AppData/img/anim/bat_hurt.gif", UriKind.Relative));
 
             Dictionary<string, EnemyAttack> batAttacks = new Dictionary<string, EnemyAttack>();
-            batAttacks.Add("Bite", new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }, new Uri("img/anim/bat_attack.gif", UriKind.Relative)));
+            batAttacks.Add("Bite", new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }, new Uri("../../../AppData/img/anim/bat_attack.gif", UriKind.Relative)));
 
             Element batElement = new Element("");
-            List<Element> loadedElements = fileManager.LoadElements();
+            List<Element> loadedElements = fileManager.LoadElements("../../../../AppData/Elements.json");
 
             if (loadedElements != null)
             {
@@ -54,7 +54,7 @@ namespace AddStuff
             }
             Enemy bat = new Enemy("Bat", batElement, batAnims, batAttacks, 20, 4, 1, 30, 1);
 
-            fileManager.SendMob(bat);
+            fileManager.SendMob(bat, "../../../../AppData/Mobs.json");
 
             bool selection = true;
 
@@ -79,7 +79,7 @@ namespace AddStuff
                 {
                     case '1':
                         Console.WriteLine("#### ADD ELEMENT ####\n");
-                        fileManager.SendElement(input.AddElement());
+                        fileManager.SendElement(input.AddElement(), "../../../../AppData/Elements.json");
                         Console.WriteLine("Element added");
                         break;
                     case '2':

@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using WpfAnimatedGif;
 using Core;
 using JsonClassLibrary;
+using System.IO;
 
 namespace Little_Fighter
 {
@@ -41,12 +42,17 @@ namespace Little_Fighter
             timerAttackEnd.Interval = TimeSpan.FromSeconds(1);
             timerAttackEnd.Tick += new EventHandler(attackEnd_timer);
 
+            if (File.Exists("../../../AppData/img/anim/bat_hurt.gif"))
+            {
+                gameConsoleInfo.Text += "File Exist \n";
+            }
+
             //gameData.Player.HP = 1;
         }
 
         static GameData loadGameData()
         {
-            List<Enemy> enemies = new JsonFileManager().LoadMobs();
+            List<Enemy> enemies = new JsonFileManager().LoadMobs("../../../AppData/Mobs.json");
 
             /*foreach (Enemy enemy in loadedEnemies)
             {
@@ -55,9 +61,9 @@ namespace Little_Fighter
 
             //Enemy loadedEnemy = enemies[rn.Next(enemies.Count)];
 
-            Enemy loadedEnemy = new Enemy("Bat", new Element("sss"), new Dictionary<string, Uri>(), new Dictionary<string, EnemyAttack>(), 22, 5, 2, 0, 1);
+            Enemy loadedEnemy = new Enemy("Bat", new Element("Night"), new Dictionary<string, Uri>(), new Dictionary<string, EnemyAttack>(), 22, 5, 2, 0, 1);
 
-            loadedEnemy.Anims.Add("idle", new Uri("img/anim/bat_idle.gif", UriKind.Relative));
+            loadedEnemy.Anims.Add("idle", new Uri("../../../AppData/img/anim/bat_hurt.gif", UriKind.Relative));
             loadedEnemy.Anims.Add("hurt", new Uri("img/anim/bat_hurt.gif", UriKind.Relative));
             loadedEnemy.Attacks.Add("Bite", new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }, new Uri("img/anim/bat_attack.gif", UriKind.Relative)));
 
@@ -65,6 +71,9 @@ namespace Little_Fighter
 
             return new GameData(new Player(), loadedEnemy, new List<CriticalEffect>(), new List<CriticalEffect>());
         }
+
+        //Strings
+        string pathToAppData = "../../../AppData/";
 
         // Objects
         static Random rn = new Random();
@@ -203,9 +212,13 @@ namespace Little_Fighter
 
         void enemyHurtAnim()
         {
+            FileStream fileStream =
+    new FileStream("../../../AppData/img/anim/bat_hurt.gif", FileMode.Open, FileAccess.Read);
+
             BitmapImage image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = gameData.Enemy.Anims["hurt"];
+
+            image.StreamSource = fileStream;
             image.EndInit();
 
             ImageBehavior.SetAnimatedSource(enemy, image);
@@ -248,13 +261,16 @@ namespace Little_Fighter
                 
                 gameData.Player.HP = gameData.Player.HP - damage;
 
-                foreach (CriticalEffect criticalEffect in enemyAttack.CriticalEffects)
+                if (damage > 0)
                 {
-                    if (criticalEffect.isEffect())
+                    foreach (CriticalEffect criticalEffect in enemyAttack.CriticalEffects)
                     {
-                        if (!gameData.PlayerCriticalEffects.Contains(criticalEffect))
+                        if (criticalEffect.isEffect())
                         {
-                            gameData.PlayerCriticalEffects.Add(criticalEffect);
+                            if (!gameData.PlayerCriticalEffects.Contains(criticalEffect))
+                            {
+                                gameData.PlayerCriticalEffects.Add(criticalEffect);
+                            }
                         }
                     }
                 }

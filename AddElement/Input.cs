@@ -24,11 +24,11 @@ namespace AddStuff
 
                 Console.Clear();
 
-                List<Element> loadedElements = new JsonFileManager().LoadElements();
+                List<Element> loadedElements = new JsonFileManager().LoadElements("../../../AppData/Elements.json");
 
                 if (loadedElements != null && loadedElements.Any())
                 {
-                    foreach (Element element in new JsonFileManager().LoadElements())
+                    foreach (Element element in new JsonFileManager().LoadElements("../../../AppData/Elements.json"))
                     {
                         if (element.Name == elementName)
                         {
@@ -169,7 +169,7 @@ namespace AddStuff
 
         public Element EditElement()
         {
-            List<Element> elements = new JsonFileManager().LoadElements();
+            List<Element> elements = new JsonFileManager().LoadElements("../../../AppData/Elements.json");
             Element selectedElement = GetSelectedElement(elements);
             Element editedElement = new Element(selectedElement.Name, selectedElement.HeighEfectivityElements, selectedElement.LowEfectivityElements);
 
@@ -195,11 +195,11 @@ namespace AddStuff
                         break;
                     case '2':
                         Console.WriteLine("#### CHANGE HIGH EFECTIVITY ELEMENTS ####");
-                        editedElement.HeighEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements());
+                        editedElement.HeighEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements("../../../AppData/Elements.json"));
                         break;
                     case '3':
                         Console.WriteLine("#### CHANGE LOW EFECTIVITY ELEMENTS ####");
-                        editedElement.LowEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements());
+                        editedElement.LowEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements("../../../AppData/Elements.json"));
                         break;
                     case '4':
                         elements.RemoveAll(element => element.Name == selectedElement.Name);
@@ -231,7 +231,7 @@ namespace AddStuff
 
             Console.Clear();
 
-            new JsonFileManager().UpdateElementsList(elements);
+            new JsonFileManager().UpdateElementsList(elements, "../../../AppData/Elements.json");
 
             return editedElement;
         }
@@ -242,11 +242,11 @@ namespace AddStuff
 
             Console.Clear();
             Console.WriteLine("###### SELECT HIGH EFECTIVITY ELEMENT ######\n");
-            List<Element> heighEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements());
+            List<Element> heighEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements("../../../AppData/Elements.json"));
 
             Console.Clear();
             Console.WriteLine("###### SELECT LOW EFECTIVITY ELEMENT ######\n");
-            List<Element> lowEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements());
+            List<Element> lowEfectivityElements = GetSelectedElements(new JsonFileManager().LoadElements("../../../AppData/Elements.json"));
 
             return new Element(elementName, heighEfectivityElements, lowEfectivityElements);
         }
