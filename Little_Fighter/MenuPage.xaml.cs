@@ -27,7 +27,9 @@ namespace Little_Fighter
 
         private void PLAY_click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("Combat.xaml", UriKind.Relative));
+            MapPage p = new MapPage();
+
+            NavigationService.Navigate(p);
         }
     }
 }

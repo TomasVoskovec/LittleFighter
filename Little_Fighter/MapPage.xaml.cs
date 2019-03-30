@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JsonClassLibrary;
 
 namespace Little_Fighter
 {
@@ -25,11 +26,24 @@ namespace Little_Fighter
             InitializeComponent();
         }
 
+        JsonFileManager fileManager = new JsonFileManager();
+
         private void nightField_click(object sender, RoutedEventArgs e)
         {
-            //Map nightField = new NightFieldMap();
+            List<Map> loadedMaps = fileManager.LoadMaps("../../../AppData/Maps.json");
 
-            //NavigationService.Navigate(new Uri("/Views/Page.xaml?parameter=test", UriKind.Relative));
+            Map loadedMap = new Map(null, null, null);
+
+            foreach(Map map in loadedMaps)
+            {
+                if (map.Name == "Night Field")
+                {
+                    loadedMap = map;
+                }
+            }
+
+            Combat p = new Combat(loadedMap);
+            NavigationService.Navigate(p);
         }
     }
 }

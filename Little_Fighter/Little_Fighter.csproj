@@ -105,7 +105,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Map.cs" />
     <Compile Include="MapPage.xaml.cs">
       <DependentUpon>MapPage.xaml</DependentUpon>
     </Compile>

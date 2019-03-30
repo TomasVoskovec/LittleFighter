@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="1" Width="500" Margin="15" FontSize="35" FontWeight="Bold" Tag="nightField" Click="nightField_click">Night field</Button>
+        <Button Grid.Row="1" Width="500" Margin="15" FontSize="35" FontWeight="Bold" Tag="nightField" Click="nightField_click">Night Field</Button>
         <Button Grid.Row="2" Width="500" Margin="15" FontSize="35" FontWeight="Bold">Forest</Button>
         <Button Grid.Row="3" Width="500" Margin="15" FontSize="35" FontWeight="Bold">Mountains</Button>
         <Button Grid.Row="4" Width="500" Margin="15" FontSize="35" FontWeight="Bold">Desert</Button>

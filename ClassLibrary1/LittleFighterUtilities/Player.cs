@@ -17,7 +17,7 @@ namespace Core
         public int XP { get; set; }
         public float Attack { get; set; }
         public float Defense { get; set; }
-        public float Speed { get; set; }
+        public float Speed { get; set; } 
 
         public Player()
         {

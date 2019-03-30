@@ -28,9 +28,13 @@ namespace Little_Fighter
     /// </summary>
     public partial class Combat : Page
     {
-        public Combat()
+        public Combat(Map map)
         {
             InitializeComponent();
+
+            mapFromMapPage = map;
+            gameData = loadGameData(mapFromMapPage);
+
             startGame();
 
             timerCanAttack.Interval = TimeSpan.FromSeconds(3);
@@ -41,16 +45,14 @@ namespace Little_Fighter
 
             timerAttackEnd.Interval = TimeSpan.FromSeconds(1);
             timerAttackEnd.Tick += new EventHandler(attackEnd_timer);
-
-            if (File.Exists("../../../AppData/img/anim/bat_hurt.gif"))
-            {
-                gameConsoleInfo.Text += "File Exist \n";
-            }
-
-            //gameData.Player.HP = 1;
         }
 
-        static GameData loadGameData()
+        void combatLoaded(object sender, RoutedEventArgs e)
+        {
+            loadGameData(mapFromMapPage);
+        }
+
+        static GameData loadGameData(Map map)
         {
             List<Enemy> enemies = new JsonFileManager().LoadMobs("../../../AppData/Mobs.json");
 
@@ -61,24 +63,20 @@ namespace Little_Fighter
 
             //Enemy loadedEnemy = enemies[rn.Next(enemies.Count)];
 
-            Enemy loadedEnemy = new Enemy("Bat", new Element("Night"), new Dictionary<string, Uri>(), new Dictionary<string, EnemyAttack>(), 22, 5, 2, 0, 1);
+            Enemy loadedEnemy = map.Enemies[rn.Next(map.Enemies.Count)];
 
-            loadedEnemy.Anims.Add("idle", new Uri("../../../AppData/img/anim/bat_hurt.gif", UriKind.Relative));
-            loadedEnemy.Anims.Add("hurt", new Uri("img/anim/bat_hurt.gif", UriKind.Relative));
-            loadedEnemy.Attacks.Add("Bite", new EnemyAttack("Bite", 1, 25, new List<CriticalEffect> { new CriticalEffect("Poison", 2, 100) }, new Uri("img/anim/bat_attack.gif", UriKind.Relative)));
-
-            loadedEnemy = enemies[0];
-
-            return new GameData(new Player(), loadedEnemy, new List<CriticalEffect>(), new List<CriticalEffect>());
+            return new GameData(map, new Player(), loadedEnemy, new List<CriticalEffect>(), new List<CriticalEffect>());
         }
 
         //Strings
-        string pathToAppData = "../../../AppData/";
+        string appDataPath = "../../../AppData/";
 
         // Objects
         static Random rn = new Random();
 
-        GameData gameData = loadGameData();
+        Map mapFromMapPage;
+
+        GameData gameData = null;
 
         List<string> consoleCommands = new List<string> { "help", "clear", "heal enemy", "kill enemy", "game data", "suicide", "dýl dymič" };
         Stack<string> lastConsoleComands = new Stack<string>();
@@ -98,6 +96,11 @@ namespace Little_Fighter
         // Start game action
         void startGame()
         {
+            mapBackground.Source = loadImage(gameData.Map.BackgroundUri);
+
+            idleAnim();
+            enemyIdleAnim();
+
             statsEnemy.Maximum = gameData.Enemy.MaxHP;
             statsEnemy.Value = gameData.Enemy.HP;
             enemyHp.Content = gameData.Enemy.HP + " HP";
@@ -150,10 +153,7 @@ namespace Little_Fighter
         // PLAYER ANIMATIONS
         void attackAnim (Uri animationUri)
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = animationUri;
-            image.EndInit();
+            BitmapImage image = loadImage(animationUri.OriginalString);
 
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
@@ -169,10 +169,7 @@ namespace Little_Fighter
 
         void hurtAnim()
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = gameData.Player.Anims["hurt"];
-            image.EndInit();
+            BitmapImage image = loadImage(gameData.Player.Anims["hurt"].OriginalString);
 
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
@@ -180,10 +177,7 @@ namespace Little_Fighter
 
         void defAnim()
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = gameData.Player.Anims["def"];
-            image.EndInit();
+            BitmapImage image = loadImage(gameData.Player.Anims["def"].OriginalString);
 
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
@@ -191,10 +185,7 @@ namespace Little_Fighter
 
         void idleAnim()
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = gameData.Player.Anims["idle"];
-            image.EndInit();
+            BitmapImage image = loadImage(gameData.Player.Anims["idle"].OriginalString);
 
             ImageBehavior.SetAnimatedSource(player, image);
         }
@@ -202,24 +193,14 @@ namespace Little_Fighter
         // ENEMY ANIMATIONS
         void enemyIdleAnim()
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = gameData.Enemy.Anims["idle"];
-            image.EndInit();
+            BitmapImage image = loadImage(gameData.Enemy.Anims["idle"].OriginalString);
 
             ImageBehavior.SetAnimatedSource(enemy, image);
         }
 
         void enemyHurtAnim()
         {
-            FileStream fileStream =
-    new FileStream("../../../AppData/img/anim/bat_hurt.gif", FileMode.Open, FileAccess.Read);
-
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-
-            image.StreamSource = fileStream;
-            image.EndInit();
+            BitmapImage image = loadImage(gameData.Enemy.Anims["hurt"].OriginalString);
 
             ImageBehavior.SetAnimatedSource(enemy, image);
             ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
@@ -239,6 +220,20 @@ namespace Little_Fighter
             int size = dict.Count;
 
             yield return values[rand.Next(size)];
+        }
+
+        BitmapImage loadImage(string gifPath)
+        {
+            gifPath = appDataPath + gifPath;
+
+            FileStream fileStream = new FileStream(gifPath, FileMode.Open, FileAccess.Read);
+
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.StreamSource = fileStream;
+            image.EndInit();
+
+            return image;
         }
 
         void enemyAttack()
@@ -354,10 +349,7 @@ namespace Little_Fighter
 
         void enemyAttackAnim(Uri animationUri)
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = animationUri;
-            image.EndInit();
+            BitmapImage image = loadImage(animationUri.OriginalString);
 
             ImageBehavior.SetAnimatedSource(enemy, image);
             ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
@@ -368,10 +360,7 @@ namespace Little_Fighter
 
         void enemyDeathAnim()
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = gameData.Enemy.Anims["hurt"];
-            image.EndInit();
+            BitmapImage image = loadImage(gameData.Enemy.Anims["hurt"].OriginalString);
 
             ImageBehavior.SetAnimatedSource(enemy, image);
             ImageBehavior.SetRepeatBehavior(enemy, new RepeatBehavior(1));
@@ -381,10 +370,7 @@ namespace Little_Fighter
 
         void playerDeathAnim()
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = gameData.Player.Anims["death"];
-            image.EndInit();
+            BitmapImage image = loadImage(gameData.Player.Anims["death"].OriginalString);
 
             ImageBehavior.SetAnimatedSource(player, image);
             ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));
@@ -399,10 +385,7 @@ namespace Little_Fighter
 
             if (isDeath)
             {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.UriSource = gameData.Player.Anims["after_death"];
-                image.EndInit();
+                BitmapImage image = loadImage(gameData.Player.Anims["after_death"].OriginalString);
 
                 ImageBehavior.SetAnimatedSource(player, image);
                 ImageBehavior.SetRepeatBehavior(player, new RepeatBehavior(1));

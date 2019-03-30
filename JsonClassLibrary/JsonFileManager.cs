@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Core;
+using Little_Fighter;
 
 namespace JsonClassLibrary
 {
@@ -17,7 +18,10 @@ namespace JsonClassLibrary
                 elements = new List<Element>();
             }
 
-            elements.Add(data);
+            if (!elements.Contains(data))
+            {
+                elements.Add(data);
+            }
 
             File.WriteAllText(filePath, JsonConvert.SerializeObject(elements));
         }
@@ -39,16 +43,41 @@ namespace JsonClassLibrary
 
         public void SendMob(Enemy data, string filePath)
         {
-            List<Enemy> elements = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText(filePath));
+            List<Enemy> mobs = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText(filePath));
 
-            if (elements == null)
+            if (mobs == null)
             {
-                elements = new List<Enemy>();
+                mobs = new List<Enemy>();
             }
 
-            elements.Add(data);
+            if (!mobs.Contains(data))
+            {
+                mobs.Add(data);
+            }
 
-            File.WriteAllText(filePath, JsonConvert.SerializeObject(elements));
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(mobs));
+        }
+
+        public List<Map> LoadMaps(string filePath)
+        {
+            return JsonConvert.DeserializeObject<List<Map>>(File.ReadAllText(filePath));
+        }
+
+        public void SendMap(Map data, string filePath)
+        {
+            List<Map> maps = JsonConvert.DeserializeObject<List<Map>>(File.ReadAllText(filePath));
+
+            if (maps == null)
+            {
+                maps = new List<Map>();
+            }
+
+            if (!maps.Contains(data))
+            {
+                maps.Add(data);
+            }
+
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(maps));
         }
     }
 }

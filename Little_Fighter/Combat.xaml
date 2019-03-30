@@ -22,13 +22,13 @@
         </Grid.RowDefinitions>
 
         <!-- Background -->
-        <Image x:Name="bckgrnd" RenderOptions.BitmapScalingMode="NearestNeighbor" Grid.RowSpan="3" Grid.ColumnSpan="2" Source="img/enviroment.png" Stretch="UniformToFill"></Image>
+        <Image x:Name="mapBackground" RenderOptions.BitmapScalingMode="NearestNeighbor" Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="UniformToFill"></Image>
 
         <!-- Stats -->
-        <Label x:Name="playerHp" Content="100 HP" FontWeight="Bold" Margin="30,0" Foreground="White" FontSize="15"></Label>
+        <Label x:Name="playerHp" Content="null" FontWeight="Bold" Margin="30,0" Foreground="White" FontSize="15"></Label>
         <ProgressBar x:Name="statsPlayer" BorderThickness="0" Background="#FFFFA3A3" Width="500" Minimum="0" Maximum="100" Value="100" Margin="30,30,0,30" HorizontalAlignment="Left" Foreground="Red"></ProgressBar>
 
-        <Label x:Name="enemyHp" Content="100 HP" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,30,0" Foreground="White" FontSize="15" Width="61"></Label>
+        <Label x:Name="enemyHp" Content="null" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,30,0" Foreground="White" FontSize="15" Width="61"></Label>
         <ProgressBar x:Name="statsEnemy" Grid.Column="1" BorderThickness="0" Value="100" Maximum="100" Width="500" Margin="0,30,30,30" HorizontalAlignment="Right" Background="#FFFFA3A3" Foreground="Red" RenderTransformOrigin="0.5,0.5">
             <ProgressBar.RenderTransform>
                 <TransformGroup>
@@ -48,13 +48,12 @@
         </WrapPanel>
 
         <!-- Heroes -->
-        <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/idle.gif" Height="200" Grid.ColumnSpan="2"/>
-        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="enemyAnimEnd" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="img/anim/bat_idle.gif" Height="200" Grid.ColumnSpan="2"/>
+        <Image x:Name="player" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="150,0,0,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="animEnd" Height="200" Grid.ColumnSpan="2"/>
+        <Image x:Name="enemy" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,150,0" Grid.Row="1" gif:ImageBehavior.AnimationCompleted="enemyAnimEnd" Height="200" Grid.ColumnSpan="2"/>
 
 
         <!-- Action Buttons -->
         <WrapPanel x:Name="actionBtns" Grid.Row="2">
-            <Button Grid.Row="2" Width="200" Margin="5" Height="40" Content="Defend" FontSize="15" FontWeight="Bold" Click="def_click"/>
         </WrapPanel>
 
         <!-- Pause Background -->
