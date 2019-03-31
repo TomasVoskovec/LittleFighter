@@ -40,6 +40,33 @@ namespace AddStuff
                 fileManager.SendMob(bat, "../../../../AppData/Mobs.json");
             }
 
+            void createStoneBat()
+            {
+                Dictionary<string, Uri> batAnims = new Dictionary<string, Uri>();
+                batAnims.Add("idle", new Uri("img/anim/stone_bat_idle.gif", UriKind.Relative));
+                batAnims.Add("hurt", new Uri("img/anim/stone_bat_hurt.gif", UriKind.Relative));
+
+                Dictionary<string, EnemyAttack> batAttacks = new Dictionary<string, EnemyAttack>();
+                batAttacks.Add("Bite", new EnemyAttack("Rock Punch", 1, 25, new List<CriticalEffect>(), new Uri("img/anim/stone_bat_attack.gif", UriKind.Relative)));
+
+                Element batElement = new Element("");
+                List<Element> loadedElements = fileManager.LoadElements("../../../../AppData/Elements.json");
+
+                if (loadedElements != null)
+                {
+                    foreach (Element element in loadedElements)
+                    {
+                        if (element.Name == "Rock")
+                        {
+                            batElement = element;
+                        }
+                    }
+                }
+                Enemy bat = new Enemy("Stone Bat", batElement, batAnims, batAttacks, 20, 4, 1, 30, 3);
+
+                fileManager.SendMob(bat, "../../../../AppData/Mobs.json");
+            }
+
             void createNightField()
             {
                 List<Enemy> loadedMobs = fileManager.LoadMobs("../../../../AppData/Mobs.json");
@@ -47,7 +74,7 @@ namespace AddStuff
 
                 foreach(Enemy mob in loadedMobs)
                 {
-                    if (mob.Element.Name == "Night")
+                    if (/*mob.Name == "Bat" ||*/ mob.Name == "Stone Bat")
                     {
                         mapMobs.Add(mob);
                     }
@@ -60,6 +87,7 @@ namespace AddStuff
 
             // ##### ADD MOBS #####
             createBat();
+            createStoneBat();
 
             // ##### ADD MAPS #####
             createNightField();
